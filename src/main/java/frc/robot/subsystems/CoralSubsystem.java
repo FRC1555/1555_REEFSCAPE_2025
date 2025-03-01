@@ -1,14 +1,14 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.sim.SparkFlexSim;
+import com.revrobotics.sim.SparkMaxSim;
 import com.revrobotics.sim.SparkLimitSwitchSim;
 import com.revrobotics.sim.SparkMaxSim;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkClosedLoopController;
-import com.revrobotics.spark.SparkFlex;
+import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.math.system.plant.DCMotor;
@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
 import frc.robot.Constants.CoralSubsystemConstants;
@@ -48,8 +49,8 @@ public class CoralSubsystem extends SubsystemBase {
 
   // Initialize elevator SPARK. We will use MAXMotion position control for the elevator, so we also
   // need to initialize the closed loop controller and encoder.
-  private SparkFlex elevatorMotor =
-      new SparkFlex(CoralSubsystemConstants.kElevatorMotorCanId, MotorType.kBrushless);
+  private SparkMax elevatorMotor =
+      new SparkMax(CoralSubsystemConstants.kElevatorMotorCanId, MotorType.kBrushless);
   private SparkClosedLoopController elevatorClosedLoopController =
       elevatorMotor.getClosedLoopController();
   private RelativeEncoder elevatorEncoder = elevatorMotor.getEncoder();
@@ -67,7 +68,7 @@ public class CoralSubsystem extends SubsystemBase {
 
   // Simulation setup and variables
   private DCMotor elevatorMotorModel = DCMotor.getNeoVortex(1);
-  private SparkFlexSim elevatorMotorSim;
+  private SparkMaxSim elevatorMotorSim;
   private SparkLimitSwitchSim elevatorLimitSwitchSim;
   private final ElevatorSim m_elevatorSim =
       new ElevatorSim(
@@ -147,7 +148,7 @@ public class CoralSubsystem extends SubsystemBase {
     elevatorEncoder.setPosition(0);
 
     // Initialize simulation values
-    elevatorMotorSim = new SparkFlexSim(elevatorMotor, elevatorMotorModel);
+    elevatorMotorSim = new SparkMaxSim(elevatorMotor, elevatorMotorModel);
     elevatorLimitSwitchSim = new SparkLimitSwitchSim(elevatorMotor, false);
     armMotorSim = new SparkMaxSim(armMotor, armMotorModel);
   }
@@ -231,7 +232,7 @@ public class CoralSubsystem extends SubsystemBase {
    */
   public Command runIntakeCommand() {
     return this.startEnd(
-        () -> this.setIntakePower(IntakeSetpoints.kForward), () -> this.setIntakePower(0.0));
+        () -> {this.setIntakePower(IntakeSetpoints.kForward); System.out.println("Running intake!");}, () -> {this.setIntakePower(0.0); System.out.println("Stopped!");});
   }
 
   /**
