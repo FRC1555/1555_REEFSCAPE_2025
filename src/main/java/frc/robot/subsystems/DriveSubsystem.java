@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.LimelightHelpers;
+import frc.robot.Robot;
 
 public class DriveSubsystem extends SubsystemBase {
   // Create MAXSwerveModules
@@ -68,11 +69,12 @@ public class DriveSubsystem extends SubsystemBase {
 
     // Get the pose estimate
     LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
-
+    if(!Robot.isSimulation()){
     // Add it to your pose estimator
     m_odometry.addVisionMeasurement(
         limelightMeasurement.pose,
         limelightMeasurement.timestampSeconds);
+    }
     m_odometry.update(
         Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ)),
         new SwerveModulePosition[] {
