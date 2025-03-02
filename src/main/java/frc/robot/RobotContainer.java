@@ -177,6 +177,6 @@ public class RobotContainer {
 
     // Run path following command, then stop at the end.
     return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false));*/
-    return Commands.run(() -> m_robotDrive.drive(1,0,0,false),m_robotDrive).withTimeout(3.5).andThen(Commands.runOnce(() -> m_robotDrive.drive(0,0,0,true),m_robotDrive)).andThen(m_coralSubSystem.reverseIntakeCommand());
+    return Commands.run(() -> m_robotDrive.drive(-1,0,0,false),m_robotDrive).withTimeout(3.5).andThen(Commands.runOnce(() -> m_robotDrive.drive(0,0,0,true),m_robotDrive)).andThen(m_coralSubSystem.reverseIntakeCommand());
   }
 }
