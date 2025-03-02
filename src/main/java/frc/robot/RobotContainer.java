@@ -16,6 +16,7 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -82,6 +83,8 @@ public class RobotContainer {
     // Left Stick Button -> Set swerve to X
     m_driverController.leftStick().whileTrue(m_robotDrive.setXCommand());
 
+    m_driverController.y().onTrue(new InstantCommand(m_robotDrive::zeroGyro ));
+
     // Left Bumper -> Run tube intake
     m_manipController.leftBumper().whileTrue(m_coralSubSystem.runIntakeCommand());
 
@@ -133,7 +136,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // Create config for trajectory
-    TrajectoryConfig config =
+    /*TrajectoryConfig config =
         new TrajectoryConfig(
                 AutoConstants.kMaxSpeedMetersPerSecond,
                 AutoConstants.kMaxAccelerationMetersPerSecondSquared)
@@ -173,6 +176,7 @@ public class RobotContainer {
     m_robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
 
     // Run path following command, then stop at the end.
-    return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false));
+    return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false));*/
+    return Commands.run(() -> m_robotDrive.drive(1,0,0,false),m_robotDrive).withTimeout(3.5).andThen(Commands.runOnce(() -> m_robotDrive.drive(0,0,0,true),m_robotDrive)).andThen(m_coralSubSystem.reverseIntakeCommand());
   }
 }

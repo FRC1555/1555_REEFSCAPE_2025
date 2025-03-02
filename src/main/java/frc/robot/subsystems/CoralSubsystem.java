@@ -13,6 +13,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
@@ -21,7 +22,6 @@ import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismRoot2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
 import frc.robot.Constants.CoralSubsystemConstants;
@@ -31,6 +31,7 @@ import frc.robot.Constants.CoralSubsystemConstants.IntakeSetpoints;
 import frc.robot.Constants.SimulationRobotConstants;
 
 public class CoralSubsystem extends SubsystemBase {
+  public DigitalInput elevatorLimitSwitch = new DigitalInput(0);
   /** Subsystem-wide setpoints */
   public enum Setpoint {
     kFeederStation,
@@ -65,6 +66,7 @@ public class CoralSubsystem extends SubsystemBase {
   private boolean wasResetByLimit = false;
   private double armCurrentTarget = ArmSetpoints.kFeederStation;
   private double elevatorCurrentTarget = ElevatorSetpoints.kFeederStation;
+  private boolean hasPrinted = false;
 
   // Simulation setup and variables
   private DCMotor elevatorMotorModel = DCMotor.getNeoVortex(1);
@@ -163,16 +165,21 @@ public class CoralSubsystem extends SubsystemBase {
     elevatorClosedLoopController.setReference(
         elevatorCurrentTarget, ControlType.kMAXMotionPositionControl);
   }
+  private void printOnce() {
 
+  }
   /** Zero the elevator encoder when the limit switch is pressed. */
   private void zeroElevatorOnLimitSwitch() {
-    if (!wasResetByLimit && elevatorMotor.getReverseLimitSwitch().isPressed()) {
+    if (!wasResetByLimit && elevatorLimitSwitch.get()) {
       // Zero the encoder only when the limit switch is switches from "unpressed" to "pressed" to
       // prevent constant zeroing while pressed
       elevatorEncoder.setPosition(0);
       wasResetByLimit = true;
-    } else if (!elevatorMotor.getReverseLimitSwitch().isPressed()) {
+      System.out.println("Limit switch pressed");
+      hasPrinted = true;
+    } else if (!elevatorLimitSwitch.get()) {
       wasResetByLimit = false;
+      hasPrinted = false;
     }
   }
 
@@ -232,7 +239,7 @@ public class CoralSubsystem extends SubsystemBase {
    */
   public Command runIntakeCommand() {
     return this.startEnd(
-        () -> {this.setIntakePower(IntakeSetpoints.kForward); System.out.println("Running intake!");}, () -> {this.setIntakePower(0.0); System.out.println("Stopped!");});
+        () -> {this.setIntakePower(IntakeSetpoints.kForward);}, () -> {this.setIntakePower(0.0);});
   }
 
   /**
@@ -241,7 +248,7 @@ public class CoralSubsystem extends SubsystemBase {
    */
   public Command reverseIntakeCommand() {
     return this.startEnd(
-        () -> this.setIntakePower(IntakeSetpoints.kReverse), () -> this.setIntakePower(0.0));
+        () -> this.setIntakePower(IntakeSetpoints.kReverse), () -> this.setIntakePower(0.0)).withTimeout(5);
   }
 
   @Override

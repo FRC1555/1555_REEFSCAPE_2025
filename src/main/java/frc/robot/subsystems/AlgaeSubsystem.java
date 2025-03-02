@@ -106,7 +106,6 @@ public class AlgaeSubsystem extends SubsystemBase {
 
     // Zero arm encoder on initialization
     armEncoder.setPosition(0);
-
     // Initialize Simulation values
     armMotorSim = new SparkMaxSim(armMotor, armMotorModel);
   }
