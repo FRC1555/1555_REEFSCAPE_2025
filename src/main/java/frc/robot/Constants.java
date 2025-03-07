@@ -19,7 +19,7 @@ import edu.wpi.first.math.util.Units;
  */
 public final class Constants {
 
-  public static final class CoralSubsystemConstants {
+  public static final class CoralSubsystemConstants { //#CoralSystem
     public static final int kElevatorMotorCanId = 4;
     public static final int kArmMotorCanId = 3;
     public static final int kIntakeMotorCanId = 2;
@@ -46,14 +46,14 @@ public final class Constants {
     }
   }
 
-  public static final class AlgaeSubsystemConstants {
+  public static final class AlgaeSubsystemConstants { //#AlgaeSystem
     public static final int kIntakeMotorCanId = 13;
     public static final int kPivotMotorCanId = 14;
 
     public static final class ArmSetpoints {
-      public static final double kStow = 18.5;
-      public static final double kHold = 11.5;
-      public static final double kDown = 0;
+      public static final double kStow = 0;
+      public static final double kHold = -11.5;
+      public static final double kDown = -30;
     }
 
     public static final class IntakeSetpoints {
@@ -63,7 +63,7 @@ public final class Constants {
     }
   }
 
-  public static final class DriveConstants {
+  public static final class DriveConstants { //#DriveSystem
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
     public static final double kMaxSpeedMetersPerSecond = 3.8;
@@ -101,7 +101,7 @@ public final class Constants {
     public static final boolean kGyroReversed = false;
   }
 
-  public static final class ModuleConstants {
+  public static final class ModuleConstants { //#MaxSwerve
     // The MAXSwerve module can be configured with one of three pinion gears: 12T,
     // 13T, or 14T. This changes the drive speed of the module (a pinion gear with
     // more teeth will result in a robot that drives faster).
@@ -119,14 +119,14 @@ public final class Constants {
         (kDrivingMotorFreeSpeedRps * kWheelCircumferenceMeters) / kDrivingMotorReduction;
   }
 
-  public static final class OIConstants {
+  public static final class OIConstants { //#Controls
     public static final int kDriverControllerPort = 0;
     public static final int kManipControllerPort = 1;
     public static final double kDriveDeadband = 0.1;
     public static final double kTriggerButtonThreshold = 0.2;
   }
 
-  public static final class AutoConstants {
+  public static final class AutoConstants { //#Auto
     public static final double kMaxSpeedMetersPerSecond = 3;
     public static final double kMaxAccelerationMetersPerSecondSquared = 3;
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
@@ -142,11 +142,11 @@ public final class Constants {
             kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
   }
 
-  public static final class NeoMotorConstants {
+  public static final class NeoMotorConstants { //#Neo
     public static final double kFreeSpeedRpm = 5676;
   }
 
-  public static final class SimulationRobotConstants {
+  public static final class SimulationRobotConstants { //#Simulation
     public static final double kPixelsPerMeter = 20;
 
     public static final double kElevatorGearing = 25; // 25:1
