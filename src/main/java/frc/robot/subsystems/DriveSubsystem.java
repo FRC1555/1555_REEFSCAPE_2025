@@ -4,6 +4,10 @@
 
 package frc.robot.subsystems;
 
+import java.io.IOException;
+
+import org.json.simple.parser.ParseException;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
@@ -24,6 +28,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
 import frc.robot.Robot;
 
@@ -48,9 +53,14 @@ public class DriveSubsystem extends SubsystemBase {
       DriveConstants.kRearRightDrivingCanId,
       DriveConstants.kRearRightTurningCanId,
       DriveConstants.kBackRightChassisAngularOffset);
-
+  
   // The gyro sensor
   private final ADIS16470_IMU m_gyro = new ADIS16470_IMU();
+
+  //Robot pose variables
+  private double xSpeedDelivered; 
+  private double ySpeedDelivered;
+  private double rotDelivered; 
 
   // Odometry class for tracking robot pose
   SwerveDrivePoseEstimator m_odometry = new SwerveDrivePoseEstimator(
@@ -62,18 +72,17 @@ public class DriveSubsystem extends SubsystemBase {
           m_rearLeft.getPosition(),
           m_rearRight.getPosition()
       }, new Pose2d());
-  
-  /** Creates a new DriveSubsystem. */
+
+  // Creates a new DriveSubsystem. 
   public DriveSubsystem() {
     m_odometry.setVisionMeasurementStdDevs(VecBuilder.fill(.5, .5, 9999999));
-    RobotConfig config;
+    RobotConfig config = null;
     try{
       config = RobotConfig.fromGUISettings();
-    } catch (Exception e) {
-      // Handle exception as needed
+    }
+    catch(Exception e){
       e.printStackTrace();
     }
-
     // Configure AutoBuilder last
     AutoBuilder.configure(
             this::getPose, // Robot pose supplier
@@ -98,6 +107,24 @@ public class DriveSubsystem extends SubsystemBase {
             },
             this // Reference to this subsystem to set requirements
     );
+  }
+  public void driveRobotRelative(ChassisSpeeds chassisSpeeds){
+    setModuleStates(Constants.DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds));
+  }
+
+  public void resetPose(Pose2d pose){
+    m_odometry.resetPosition(
+     Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ)),
+     new SwerveModulePosition[]{
+      m_frontLeft.getPosition(),
+      m_frontRight.getPosition(),
+      m_rearLeft.getPosition(),
+      m_rearRight.getPosition()
+     },
+    pose);
+  }
+  public ChassisSpeeds getRobotRelativeSpeeds(){
+    return new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered);
   }
 
   @Override
@@ -162,11 +189,12 @@ public class DriveSubsystem extends SubsystemBase {
    * @param fieldRelative Whether the provided x and y speeds are relative to the
    *                      field.
    */
+
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
     // Convert the commanded speeds into the correct units for the drivetrain
-    double xSpeedDelivered = xSpeed * DriveConstants.kMaxSpeedMetersPerSecond;
-    double ySpeedDelivered = ySpeed * DriveConstants.kMaxSpeedMetersPerSecond;
-    double rotDelivered = rot * DriveConstants.kMaxAngularSpeed;
+    xSpeedDelivered = xSpeed * DriveConstants.kMaxSpeedMetersPerSecond;
+    ySpeedDelivered = ySpeed * DriveConstants.kMaxSpeedMetersPerSecond;
+    rotDelivered = rot * DriveConstants.kMaxAngularSpeed;
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
