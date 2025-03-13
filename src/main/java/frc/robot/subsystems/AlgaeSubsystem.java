@@ -102,7 +102,7 @@ public class AlgaeSubsystem extends SubsystemBase {
         PersistMode.kPersistParameters);
 
     // Display mechanism2d
-    SmartDashboard.putData("Algae Subsystem", m_mech2d);
+    // SmartDashboard.putData("Algae Subsystem", m_mech2d);
 
     // Zero arm encoder on initialization
     armEncoder.setPosition(0);
@@ -193,9 +193,9 @@ public class AlgaeSubsystem extends SubsystemBase {
   public void periodic() {
     zeroOnUserButton();
 
-    // Display subsystem values
-    SmartDashboard.putNumber("Algae/Arm/Position", armEncoder.getPosition());
-    SmartDashboard.putNumber("Algae/Intake/Applied Output", intakeMotor.getAppliedOutput());
+    // // Display subsystem values
+    // SmartDashboard.putNumber("Algae/Arm/Position", armEncoder.getPosition());
+    // SmartDashboard.putNumber("Algae/Intake/Applied Output", intakeMotor.getAppliedOutput());
 
     // Update mechanism2d
     intakePivotMechanism.setAngle(

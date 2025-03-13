@@ -14,6 +14,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.XboxController;
@@ -56,6 +57,16 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    //registering named Commands for Algae
+    NamedCommands.registerCommand("Grab Algae", m_algaeSubsystem.runIntakeCommand());
+    NamedCommands.registerCommand("Spit Out Algae", m_algaeSubsystem.reverseIntakeCommand());
+    //registering named commands for Coral
+    NamedCommands.registerCommand("Grab Coral", m_coralSubSystem.runIntakeCommand());
+    NamedCommands.registerCommand("Spit Out Coral", m_coralSubSystem.reverseIntakeCommand());
+    NamedCommands.registerCommand("Coral Station", m_coralSubSystem.setSetpointCommand(Setpoint.kFeederStation));
+    NamedCommands.registerCommand("L2", m_coralSubSystem.setSetpointCommand(Setpoint.kLevel2));
+    NamedCommands.registerCommand("L3", m_coralSubSystem.setSetpointCommand(Setpoint.kLevel3));
+    NamedCommands.registerCommand("L4", m_coralSubSystem.setSetpointCommand(Setpoint.kLevel4));
     //building the auto chooser on smartdashboard
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);

@@ -143,7 +143,7 @@ public class CoralSubsystem extends SubsystemBase {
         PersistMode.kPersistParameters);
 
     // Display mechanism2d
-    SmartDashboard.putData("Coral Subsystem", m_mech2d);
+    // SmartDashboard.putData("Coral Subsystem", m_mech2d);
 
     // Zero arm and elevator encoders on initialization
     armEncoder.setPosition(0);
@@ -257,12 +257,12 @@ public class CoralSubsystem extends SubsystemBase {
     zeroElevatorOnLimitSwitch();
     zeroOnUserButton();
 
-    // Display subsystem values
-    SmartDashboard.putNumber("Coral/Arm/Target Position", armCurrentTarget);
-    SmartDashboard.putNumber("Coral/Arm/Actual Position", armEncoder.getPosition());
-    SmartDashboard.putNumber("Coral/Elevator/Target Position", elevatorCurrentTarget);
-    SmartDashboard.putNumber("Coral/Elevator/Actual Position", elevatorEncoder.getPosition());
-    SmartDashboard.putNumber("Coral/Intake/Applied Output", intakeMotor.getAppliedOutput());
+      // // Display subsystem values
+      // SmartDashboard.putNumber("Coral/Arm/Target Position", armCurrentTarget);
+      // SmartDashboard.putNumber("Coral/Arm/Actual Position", armEncoder.getPosition());
+      // SmartDashboard.putNumber("Coral/Elevator/Target Position", elevatorCurrentTarget);
+      // SmartDashboard.putNumber("Coral/Elevator/Actual Position", elevatorEncoder.getPosition());
+      // SmartDashboard.putNumber("Coral/Intake/Applied Output", intakeMotor.getAppliedOutput());
 
     // Update mechanism2d
     m_elevatorMech2d.setLength(
