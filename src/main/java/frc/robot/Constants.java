@@ -29,7 +29,7 @@ public final class Constants {
       public static final int kLevel1 = 0;
       public static final int kLevel2 = 0;
       public static final int kLevel3 = -100;
-      public static final int kLevel4 = -150;
+      public static final int kLevel4 = -147; // Do NOT touch this number, this is the maximum before it hits the turnbuckle
     }
 
     public static final class ArmSetpoints {
