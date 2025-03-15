@@ -28,16 +28,16 @@ public final class Constants {
       public static final int kFeederStation = 0;
       public static final int kLevel1 = 0;
       public static final int kLevel2 = 0;
-      public static final int kLevel3 = -100;
+      public static final int kLevel3 = -75;
       public static final int kLevel4 = -147; // Do NOT touch this number, this is the maximum before it hits the turnbuckle
     }
 
     public static final class ArmSetpoints {
-      public static final double kFeederStation = -5;
+      public static final double kFeederStation = -7;
       public static final double kLevel1 = 0;
-      public static final double kLevel2 = -34;
-      public static final double kLevel3 = -34;
-      public static final double kLevel4 = -19;
+      public static final double kLevel2 = -38;
+      public static final double kLevel3 = -38;
+      public static final double kLevel4 = -34;
     }
 
     public static final class IntakeSetpoints {
