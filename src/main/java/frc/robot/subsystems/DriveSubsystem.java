@@ -130,16 +130,16 @@ public class DriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // Update the odometry in the periodic block
-    LimelightHelpers.SetRobotOrientation("limelight", m_gyro.getAngle(), 0.0, 0.0, 0.0, 0.0, 0.0);
+    // LimelightHelpers.SetRobotOrientation("limelight", m_gyro.getAngle(), 0.0, 0.0, 0.0, 0.0, 0.0);
 
     // Get the pose estimate
-    LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
-    if(!Robot.isSimulation()){
-    // Add it to your pose estimator
-    m_odometry.addVisionMeasurement(
-        limelightMeasurement.pose,
-        limelightMeasurement.timestampSeconds);
-    }
+    // LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
+    // if(!Robot.isSimulation()){
+    // // Add it to your pose estimator
+    // m_odometry.addVisionMeasurement(
+    //     limelightMeasurement.pose,
+    //     limelightMeasurement.timestampSeconds);
+    // }
     m_odometry.update(
         Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ)),
         new SwerveModulePosition[] {
