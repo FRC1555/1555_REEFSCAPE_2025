@@ -41,8 +41,8 @@ public final class Constants {
     }
 
     public static final class IntakeSetpoints {
-      public static final double kForward = 0.5;
-      public static final double kReverse = -0.5;
+      public static final double kForward = -0.5;
+      public static final double kReverse = 0.5;
     }
   }
 
@@ -53,13 +53,13 @@ public final class Constants {
     public static final class ArmSetpoints {
       public static final double kStow = 0;
       public static final double kHold = -11.5;
-      public static final double kDown = -30;
+      public static final double kDown = -35;
     }
 
     public static final class IntakeSetpoints {
-      public static final double kForward = 0.5;
+      public static final double kForward = 0.6;
       public static final double kReverse = -0.5;
-      public static final double kHold = 0.25;
+      public static final double kHold = 0.3;
     }
   }
 
