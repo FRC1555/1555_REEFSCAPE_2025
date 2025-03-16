@@ -1,0 +1,25 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "1Rswoop"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Spit Out Coral"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "test",
+  "choreoAuto": false
+}
