@@ -86,8 +86,8 @@ public class DriveSubsystem extends SubsystemBase {
     // Configure AutoBuilder last
     AutoBuilder.configure(
             this::getPose, // Robot pose supplier
-            this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
-            this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+            this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
+            this::getChassisSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
             new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
                     new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
@@ -123,23 +123,28 @@ public class DriveSubsystem extends SubsystemBase {
      },
     pose);
   }
-  public ChassisSpeeds getRobotRelativeSpeeds(){
-    return new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered);
+  public ChassisSpeeds getChassisSpeeds(){
+    return DriveConstants.kDriveKinematics.toChassisSpeeds(
+      m_frontLeft.getState(),
+      m_frontRight.getState(),
+      m_rearLeft.getState(),
+      m_rearRight.getState()
+    );
   }
 
   @Override
   public void periodic() {
     // Update the odometry in the periodic block
-    LimelightHelpers.SetRobotOrientation("limelight", m_gyro.getAngle(), 0.0, 0.0, 0.0, 0.0, 0.0);
+    // LimelightHelpers.SetRobotOrientation("limelight", m_gyro.getAngle(), 0.0, 0.0, 0.0, 0.0, 0.0);
 
     // Get the pose estimate
-    LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
-    if(!Robot.isSimulation()){
-    // Add it to your pose estimator
-    m_odometry.addVisionMeasurement(
-        limelightMeasurement.pose,
-        limelightMeasurement.timestampSeconds);
-    }
+    // LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
+    // if(!Robot.isSimulation()){
+    // // Add it to your pose estimator
+    // m_odometry.addVisionMeasurement(
+    //     limelightMeasurement.pose,
+    //     limelightMeasurement.timestampSeconds);
+    // }
     m_odometry.update(
         Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ)),
         new SwerveModulePosition[] {

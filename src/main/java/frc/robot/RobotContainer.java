@@ -106,10 +106,10 @@ public class RobotContainer {
     m_driverController.y().onTrue(new InstantCommand(m_robotDrive::zeroGyro ));
 
     // Left Bumper -> Run tube intake
-    m_manipController.leftBumper().whileTrue(m_coralSubSystem.runIntakeCommand());
+    m_manipController.rightBumper().whileTrue(m_coralSubSystem.runIntakeCommand());
 
     // Right Bumper -> Run tube intake in reverse
-    m_manipController.rightBumper().whileTrue(m_coralSubSystem.reverseIntakeCommand());
+    m_manipController.leftBumper().whileTrue(m_coralSubSystem.reverseIntakeCommand());
 
     // B Button -> Elevator/Arm to human player position, set ball intake to stow
     // when idle

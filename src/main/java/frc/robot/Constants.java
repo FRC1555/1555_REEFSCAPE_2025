@@ -28,21 +28,21 @@ public final class Constants {
       public static final int kFeederStation = 0;
       public static final int kLevel1 = 0;
       public static final int kLevel2 = 0;
-      public static final int kLevel3 = -100;
+      public static final int kLevel3 = -75;
       public static final int kLevel4 = -147; // Do NOT touch this number, this is the maximum before it hits the turnbuckle
     }
 
     public static final class ArmSetpoints {
-      public static final double kFeederStation = 34;
+      public static final double kFeederStation = -5;
       public static final double kLevel1 = 0;
-      public static final double kLevel2 = 10;
-      public static final double kLevel3 = 10;
-      public static final double kLevel4 = 19;
+      public static final double kLevel2 = -36;
+      public static final double kLevel3 = -36;
+      public static final double kLevel4 = -34;
     }
 
     public static final class IntakeSetpoints {
-      public static final double kForward = 0.5;
-      public static final double kReverse = -0.5;
+      public static final double kForward = -0.5;
+      public static final double kReverse = 0.5;
     }
   }
 
@@ -53,13 +53,13 @@ public final class Constants {
     public static final class ArmSetpoints {
       public static final double kStow = 0;
       public static final double kHold = -11.5;
-      public static final double kDown = -30;
+      public static final double kDown = -35;
     }
 
     public static final class IntakeSetpoints {
-      public static final double kForward = 0.5;
+      public static final double kForward = 0.6;
       public static final double kReverse = -0.5;
-      public static final double kHold = 0.25;
+      public static final double kHold = 0.4;
     }
   }
 
