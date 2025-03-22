@@ -13,6 +13,8 @@ import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
+import edu.wpi.first.wpilibj.Joystick;
+
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -28,6 +30,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.OIConstants;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
 import frc.robot.Robot;
@@ -62,6 +65,9 @@ public class DriveSubsystem extends SubsystemBase {
   private double ySpeedDelivered;
   private double rotDelivered; 
 
+  // Not realy sure how to pull the values from robot container, so I'll pull it here
+  private Joystick m_SpeedControl = new Joystick(OIConstants.kDriverControllerPort);
+  private double speedValue = m_SpeedControl.getZ();
   // Odometry class for tracking robot pose
   SwerveDrivePoseEstimator m_odometry = new SwerveDrivePoseEstimator(
       DriveConstants.kDriveKinematics,
@@ -197,9 +203,9 @@ public class DriveSubsystem extends SubsystemBase {
 
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
     // Convert the commanded speeds into the correct units for the drivetrain
-    xSpeedDelivered = xSpeed * DriveConstants.kMaxSpeedMetersPerSecond;
-    ySpeedDelivered = ySpeed * DriveConstants.kMaxSpeedMetersPerSecond;
-    rotDelivered = rot * DriveConstants.kMaxAngularSpeed;
+    xSpeedDelivered = xSpeed * DriveConstants.kMaxSpeedMetersPerSecond * speedValue;
+    ySpeedDelivered = ySpeed * DriveConstants.kMaxSpeedMetersPerSecond * speedValue;
+    rotDelivered = rot * DriveConstants.kMaxAngularSpeed * speedValue;
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
