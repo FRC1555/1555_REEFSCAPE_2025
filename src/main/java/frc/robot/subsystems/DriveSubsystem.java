@@ -65,9 +65,7 @@ public class DriveSubsystem extends SubsystemBase {
   private double ySpeedDelivered;
   private double rotDelivered; 
 
-  // Not realy sure how to pull the values from robot container, so I'll pull it here
-  private Joystick m_SpeedControl = new Joystick(OIConstants.kDriverControllerPort);
-  private double speedValue = m_SpeedControl.getTwist();
+
   // Odometry class for tracking robot pose
   SwerveDrivePoseEstimator m_odometry = new SwerveDrivePoseEstimator(
       DriveConstants.kDriveKinematics,
@@ -203,9 +201,9 @@ public class DriveSubsystem extends SubsystemBase {
 
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
     // Convert the commanded speeds into the correct units for the drivetrain
-    xSpeedDelivered = xSpeed * DriveConstants.kMaxSpeedMetersPerSecond * speedValue;
-    ySpeedDelivered = ySpeed * DriveConstants.kMaxSpeedMetersPerSecond * speedValue;
-    rotDelivered = rot * DriveConstants.kMaxAngularSpeed * speedValue;
+    xSpeedDelivered = xSpeed * DriveConstants.kMaxSpeedMetersPerSecond;
+    ySpeedDelivered = ySpeed * DriveConstants.kMaxSpeedMetersPerSecond;
+    rotDelivered = rot * DriveConstants.kMaxAngularSpeed;
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
