@@ -67,7 +67,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   // Not realy sure how to pull the values from robot container, so I'll pull it here
   private Joystick m_SpeedControl = new Joystick(OIConstants.kDriverControllerPort);
-  private double speedValue = m_SpeedControl.getZ();
+  private double speedValue = m_SpeedControl.getTwist();
   // Odometry class for tracking robot pose
   SwerveDrivePoseEstimator m_odometry = new SwerveDrivePoseEstimator(
       DriveConstants.kDriveKinematics,
