@@ -59,6 +59,9 @@ public class RobotContainer {
   public CommandXboxController m_manipController =
       new CommandXboxController(OIConstants.kManipControllerPort);
 
+  // Heading Zero button
+  public JoystickButton resetHeading = new JoystickButton(m_driverController, 5);
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     //registering named Commands for Algae
@@ -139,8 +142,8 @@ public class RobotContainer {
         .leftTrigger(OIConstants.kTriggerButtonThreshold)
         .whileTrue(m_algaeSubsystem.reverseIntakeCommand());
 
-    // Start Button -> Zero swerve heading
-    m_driverController.button(5, ).whenPressed(() -> m_robotDrive.zeroHeading());
+    // Button 5 -> Zero swerve heading
+    resetHeading.onTrue(new InstantCommand(() -> m_robotDrive.zeroHeadingCommand()));
   }
 
   public double getSimulationTotalCurrentDraw() {
