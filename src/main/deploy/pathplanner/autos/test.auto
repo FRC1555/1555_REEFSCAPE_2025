@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "bOP2toF"
+            "pathName": "bOP2toFface"
           }
         },
         {
@@ -26,6 +26,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "test",
+  "folder": "old",
   "choreoAuto": false
 }
