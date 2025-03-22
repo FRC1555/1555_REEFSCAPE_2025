@@ -17,7 +17,11 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import edu.wpi.first.wpilibj.event.EventLoop;
+import edu.wpi.first.wpilibj.event.BooleanEvent;
+
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -50,8 +54,8 @@ public class RobotContainer {
   private final AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
 
   // The driver's controller
-  public CommandXboxController m_driverController =
-      new CommandXboxController(OIConstants.kDriverControllerPort);
+  public Joystick m_driverController =
+      new Joystick(OIConstants.kDriverControllerPort);
   public CommandXboxController m_manipController =
       new CommandXboxController(OIConstants.kManipControllerPort);
 
@@ -81,11 +85,11 @@ public class RobotContainer {
             () ->
                 m_robotDrive.drive(
                     -MathUtil.applyDeadband(
-                        m_driverController.getLeftY(), OIConstants.kDriveDeadband),
+                        m_driverController.getY(), OIConstants.kDriveDeadband),
                     -MathUtil.applyDeadband(
-                        m_driverController.getLeftX(), OIConstants.kDriveDeadband),
+                        m_driverController.getX(), OIConstants.kDriveDeadband),
                     -MathUtil.applyDeadband(
-                        m_driverController.getRightX(), OIConstants.kDriveDeadband),
+                        m_driverController.getZ(), OIConstants.kDriveDeadband),
                     true),
             m_robotDrive));
 
@@ -100,10 +104,8 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    // Left Stick Button -> Set swerve to X
-    m_driverController.leftStick().whileTrue(m_robotDrive.setXCommand());
 
-    m_driverController.y().onTrue(new InstantCommand(m_robotDrive::zeroGyro ));
+
 
     // Left Bumper -> Run tube intake
     m_manipController.rightBumper().whileTrue(m_coralSubSystem.runIntakeCommand());
@@ -140,7 +142,7 @@ public class RobotContainer {
         .whileTrue(m_algaeSubsystem.reverseIntakeCommand());
 
     // Start Button -> Zero swerve heading
-    m_driverController.start().onTrue(m_robotDrive.zeroHeadingCommand());
+    m_driverController.button(5, ).whenPressed(() -> m_robotDrive.zeroHeading());
   }
 
   public double getSimulationTotalCurrentDraw() {
