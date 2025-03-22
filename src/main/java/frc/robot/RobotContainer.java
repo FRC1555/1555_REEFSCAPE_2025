@@ -90,7 +90,7 @@ public class RobotContainer {
                     -MathUtil.applyDeadband(
                         m_driverController.getX(), OIConstants.kDriveDeadband),
                     -MathUtil.applyDeadband(
-                        m_driverController.getThrottle(), OIConstants.kDriveDeadband),
+                        m_driverController.getThrottle(), OIConstants.kDriveDeadband), // I know this says throttle, it's spin, do not touch
                     true),
             m_robotDrive));
 
