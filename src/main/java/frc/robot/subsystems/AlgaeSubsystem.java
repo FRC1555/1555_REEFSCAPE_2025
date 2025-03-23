@@ -73,7 +73,6 @@ public class AlgaeSubsystem extends SubsystemBase {
                   * SimulationRobotConstants.kPixelsPerMeter,
               Units.radiansToDegrees(SimulationRobotConstants.kIntakeMinAngleRads)));
 
-  @SuppressWarnings("unused")
   private final MechanismLigament2d intakePivotSecondMechanism =
       intakePivotMechanism.append(
           new MechanismLigament2d(
