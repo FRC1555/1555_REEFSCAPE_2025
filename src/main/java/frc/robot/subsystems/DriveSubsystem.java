@@ -32,6 +32,7 @@ import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
 import frc.robot.Robot;
 
+@SuppressWarnings("unused")
 public class DriveSubsystem extends SubsystemBase {
   // Create MAXSwerveModules
   private final MAXSwerveModule m_frontLeft = new MAXSwerveModule(

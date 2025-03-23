@@ -30,6 +30,7 @@ import frc.robot.Constants.CoralSubsystemConstants.ElevatorSetpoints;
 import frc.robot.Constants.CoralSubsystemConstants.IntakeSetpoints;
 import frc.robot.Constants.SimulationRobotConstants;
 
+@SuppressWarnings("unused")
 public class CoralSubsystem extends SubsystemBase {
   public DigitalInput elevatorLimitSwitch = new DigitalInput(0);
   /** Subsystem-wide setpoints */
@@ -66,7 +67,6 @@ public class CoralSubsystem extends SubsystemBase {
   private boolean wasResetByLimit = false;
   private double armCurrentTarget = ArmSetpoints.kFeederStation;
   private double elevatorCurrentTarget = ElevatorSetpoints.kFeederStation;
-  private boolean hasPrinted = false;
 
   // Simulation setup and variables
   private DCMotor elevatorMotorModel = DCMotor.getNeoVortex(1);
@@ -165,9 +165,7 @@ public class CoralSubsystem extends SubsystemBase {
     elevatorClosedLoopController.setReference(
         elevatorCurrentTarget, ControlType.kMAXMotionPositionControl);
   }
-  private void printOnce() {
 
-  }
   /** Zero the elevator encoder when the limit switch is pressed. */
   private void zeroElevatorOnLimitSwitch() {
     if (!wasResetByLimit && elevatorLimitSwitch.get()) {
@@ -175,11 +173,8 @@ public class CoralSubsystem extends SubsystemBase {
       // prevent constant zeroing while pressed
       elevatorEncoder.setPosition(0);
       wasResetByLimit = true;
-      System.out.println("Limit switch pressed");
-      hasPrinted = true;
     } else if (!elevatorLimitSwitch.get()) {
       wasResetByLimit = false;
-      hasPrinted = false;
     }
   }
 

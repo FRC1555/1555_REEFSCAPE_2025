@@ -27,6 +27,7 @@ import frc.robot.Configs;
 import frc.robot.Constants.AlgaeSubsystemConstants;
 import frc.robot.Constants.SimulationRobotConstants;
 
+@SuppressWarnings("unused")
 public class AlgaeSubsystem extends SubsystemBase {
   // Initialize arm SPARK. We will use MAXMotion position control for the arm, so we also need to
   // initialize the closed loop controller and encoder.
