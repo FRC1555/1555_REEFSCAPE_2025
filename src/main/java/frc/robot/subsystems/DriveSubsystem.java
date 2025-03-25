@@ -66,6 +66,10 @@ public class DriveSubsystem extends SubsystemBase {
   private double ySpeedDelivered;
   private double rotDelivered; 
 
+  //Speed Control variables
+  public double currentDriveSpeed;
+
+
 
   // Odometry class for tracking robot pose
   SwerveDrivePoseEstimator m_odometry = new SwerveDrivePoseEstimator(
@@ -190,6 +194,10 @@ public class DriveSubsystem extends SubsystemBase {
         pose);
   }
 
+
+  public void setDriveSpeed(double newDriveSpeed){
+    currentDriveSpeed = newDriveSpeed;
+  };
   /**
    * Method to drive the robot using joystick info.
    *
@@ -202,9 +210,9 @@ public class DriveSubsystem extends SubsystemBase {
 
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
     // Convert the commanded speeds into the correct units for the drivetrain
-    xSpeedDelivered = xSpeed * DriveConstants.kMaxSpeedMetersPerSecond;
-    ySpeedDelivered = ySpeed * DriveConstants.kMaxSpeedMetersPerSecond;
-    rotDelivered = rot * DriveConstants.kMaxAngularSpeed;
+    xSpeedDelivered = xSpeed * DriveConstants.kMaxSpeedMetersPerSecond * currentDriveSpeed;
+    ySpeedDelivered = ySpeed * DriveConstants.kMaxSpeedMetersPerSecond * currentDriveSpeed;
+    rotDelivered = rot * DriveConstants.kMaxAngularSpeed * currentDriveSpeed;
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
