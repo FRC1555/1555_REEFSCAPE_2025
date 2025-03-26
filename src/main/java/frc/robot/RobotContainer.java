@@ -60,6 +60,11 @@ public class RobotContainer {
   public CommandXboxController m_manipController =
       new CommandXboxController(OIConstants.kManipControllerPort);
 
+  // Joystick buttons for speed control
+  public JoystickButton fullSendButton = new JoystickButton(m_driverController, 1);
+  public JoystickButton highSpeedButton = new JoystickButton(m_driverController, 2);
+  public JoystickButton midSpeedButton = new JoystickButton(m_driverController, 3);
+  public JoystickButton lowSpeedButton = new JoystickButton(m_driverController, 4);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -140,6 +145,12 @@ public class RobotContainer {
     m_manipController
         .leftTrigger(OIConstants.kTriggerButtonThreshold)
         .whileTrue(m_algaeSubsystem.reverseIntakeCommand());
+
+    // Turtle Beach Button 1 or Colored A -> Set Robot Speed to Full Send (Child Detected)
+    fullSendButton.onTrue(new InstantCommand(() -> m_robotDrive.setDriveSpeed(1)));
+    highSpeedButton.onTrue(new InstantCommand(() -> m_robotDrive.setDriveSpeed(0.75)));
+    midSpeedButton.onTrue(new InstantCommand(() -> m_robotDrive.setDriveSpeed(0.5)));
+    lowSpeedButton.onTrue(new InstantCommand(() -> m_robotDrive.setDriveSpeed(0.25)));
 
 
   }
