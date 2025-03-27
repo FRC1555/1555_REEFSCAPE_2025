@@ -153,6 +153,17 @@ public class RobotContainer {
     midSpeedButton.onTrue(new InstantCommand(() -> m_robotDrive.setDriveSpeed(0.5)));
     lowSpeedButton.onTrue(new InstantCommand(() -> m_robotDrive.setDriveSpeed(0.25)));
 
+        // Bind buttons 5, 6, 7, and 8 to reset the gyro
+        new JoystickButton(m_driverController, 5)
+            .onTrue(new InstantCommand(m_robotDrive::resetGyro, m_robotDrive));
+        new JoystickButton(m_driverController, 6)
+            .onTrue(new InstantCommand(m_robotDrive::resetGyro, m_robotDrive));
+        new JoystickButton(m_driverController, 7)
+            .onTrue(new InstantCommand(m_robotDrive::resetGyro, m_robotDrive));
+        new JoystickButton(m_driverController, 8)
+            .onTrue(new InstantCommand(m_robotDrive::resetGyro, m_robotDrive));
+
+
 
   }
 
