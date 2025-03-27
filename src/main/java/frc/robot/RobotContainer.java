@@ -41,6 +41,9 @@ import frc.robot.subsystems.CoralSubsystem.Setpoint;
 import frc.robot.subsystems.DriveSubsystem;
 import java.util.List;
 
+import edu.wpi.first.wpilibj.ADIS16470_IMU;
+import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
+
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
