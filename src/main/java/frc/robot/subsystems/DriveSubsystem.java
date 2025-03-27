@@ -68,7 +68,7 @@ public class DriveSubsystem extends SubsystemBase {
   private double rotDelivered; 
 
   //Speed Control variables
-  public double currentDriveSpeed;
+  public double currentDriveSpeed = 0.75;
 
 
 
