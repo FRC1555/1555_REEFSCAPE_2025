@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
@@ -67,7 +68,7 @@ public class DriveSubsystem extends SubsystemBase {
   private double rotDelivered; 
 
   //Speed Control variables
-  public double currentDriveSpeed;
+  public double currentDriveSpeed = 0.5;
 
 
 
@@ -263,10 +264,6 @@ public class DriveSubsystem extends SubsystemBase {
     m_rearRight.resetEncoders();
   }
 
-  /** Zeroes the heading of the robot. */
-  public Command zeroHeadingCommand() {
-    return this.runOnce(() -> m_gyro.reset());
-  }
 
   /**
    * Returns the heading of the robot.
@@ -284,5 +281,9 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public double getTurnRate() {
     return m_gyro.getRate(IMUAxis.kZ) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+  }
+
+  public void resetGyro() {
+    m_gyro.setGyroAngle(IMUAxis.kZ, 0);
   }
 }

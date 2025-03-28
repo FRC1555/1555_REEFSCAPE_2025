@@ -41,6 +41,7 @@ import frc.robot.subsystems.CoralSubsystem.Setpoint;
 import frc.robot.subsystems.DriveSubsystem;
 import java.util.List;
 
+
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -151,6 +152,17 @@ public class RobotContainer {
     highSpeedButton.onTrue(new InstantCommand(() -> m_robotDrive.setDriveSpeed(0.75)));
     midSpeedButton.onTrue(new InstantCommand(() -> m_robotDrive.setDriveSpeed(0.5)));
     lowSpeedButton.onTrue(new InstantCommand(() -> m_robotDrive.setDriveSpeed(0.25)));
+
+        // Bind buttons 5, 6, 7, and 8 to reset the gyro
+        new JoystickButton(m_driverController, 5)
+            .onTrue(new InstantCommand(m_robotDrive::resetGyro, m_robotDrive));
+        new JoystickButton(m_driverController, 6)
+            .onTrue(new InstantCommand(m_robotDrive::resetGyro, m_robotDrive));
+        new JoystickButton(m_driverController, 7)
+            .onTrue(new InstantCommand(m_robotDrive::resetGyro, m_robotDrive));
+        new JoystickButton(m_driverController, 8)
+            .onTrue(new InstantCommand(m_robotDrive::resetGyro, m_robotDrive));
+
 
 
   }
