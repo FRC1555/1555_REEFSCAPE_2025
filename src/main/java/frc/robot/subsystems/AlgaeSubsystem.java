@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
 import frc.robot.Constants.AlgaeSubsystemConstants;
-import frc.robot.Constants.SimulationRobotConstants;
+// import frc.robot.Constants.SimulationRobotConstants;
 
 @SuppressWarnings("unused")
 public class AlgaeSubsystem extends SubsystemBase {
@@ -48,38 +48,38 @@ public class AlgaeSubsystem extends SubsystemBase {
   // Simulation setup and variables
   private DCMotor armMotorModel = DCMotor.getNeoVortex(1);
   private SparkMaxSim armMotorSim;
-  private final SingleJointedArmSim m_intakeSim =
-      new SingleJointedArmSim(
-          armMotorModel,
-          SimulationRobotConstants.kIntakeReduction,
-          SingleJointedArmSim.estimateMOI(
-              SimulationRobotConstants.kIntakeLength, SimulationRobotConstants.kIntakeMass),
-          SimulationRobotConstants.kIntakeLength,
-          SimulationRobotConstants.kIntakeMinAngleRads,
-          SimulationRobotConstants.kIntakeMaxAngleRads,
-          true,
-          SimulationRobotConstants.kIntakeMinAngleRads,
-          0.0,
-          0.0);
+  // private final SingleJointedArmSim m_intakeSim =
+  //     new SingleJointedArmSim(
+  //         armMotorModel,
+  //         SimulationRobotConstants.kIntakeReduction,
+  //         SingleJointedArmSim.estimateMOI(
+  //             SimulationRobotConstants.kIntakeLength, SimulationRobotConstants.kIntakeMass),
+  //         SimulationRobotConstants.kIntakeLength,
+  //         SimulationRobotConstants.kIntakeMinAngleRads,
+  //         SimulationRobotConstants.kIntakeMaxAngleRads,
+  //         true,
+  //         SimulationRobotConstants.kIntakeMinAngleRads,
+  //         0.0,
+  //         0.0);
 
   // Mechanism2d setup for subsytem
   private final Mechanism2d m_mech2d = new Mechanism2d(50, 50);
   private final MechanismRoot2d m_mech2dRoot = m_mech2d.getRoot("Ball Intake Root", 28, 3);
-  private final MechanismLigament2d intakePivotMechanism =
-      m_mech2dRoot.append(
-          new MechanismLigament2d(
-              "Intake Pivot",
-              SimulationRobotConstants.kIntakeShortBarLength
-                  * SimulationRobotConstants.kPixelsPerMeter,
-              Units.radiansToDegrees(SimulationRobotConstants.kIntakeMinAngleRads)));
+  // private final MechanismLigament2d intakePivotMechanism =
+  //     m_mech2dRoot.append(
+  //         new MechanismLigament2d(
+  //             "Intake Pivot",
+  //             SimulationRobotConstants.kIntakeShortBarLength
+  //                 * SimulationRobotConstants.kPixelsPerMeter,
+  //             Units.radiansToDegrees(SimulationRobotConstants.kIntakeMinAngleRads)));
 
-  private final MechanismLigament2d intakePivotSecondMechanism =
-      intakePivotMechanism.append(
-          new MechanismLigament2d(
-              "Intake Pivot Second Bar",
-              SimulationRobotConstants.kIntakeLongBarLength
-                  * SimulationRobotConstants.kPixelsPerMeter,
-              Units.radiansToDegrees(SimulationRobotConstants.kIntakeBarAngleRads)));
+  // private final MechanismLigament2d intakePivotSecondMechanism =
+  //     intakePivotMechanism.append(
+  //         new MechanismLigament2d(
+  //             "Intake Pivot Second Bar",
+  //             SimulationRobotConstants.kIntakeLongBarLength
+  //                 * SimulationRobotConstants.kPixelsPerMeter,
+  //             Units.radiansToDegrees(SimulationRobotConstants.kIntakeBarAngleRads)));
 
   public AlgaeSubsystem() {
     /*
@@ -197,32 +197,32 @@ public class AlgaeSubsystem extends SubsystemBase {
     // SmartDashboard.putNumber("Algae/Arm/Position", armEncoder.getPosition());
     // SmartDashboard.putNumber("Algae/Intake/Applied Output", intakeMotor.getAppliedOutput());
 
-    // Update mechanism2d
-    intakePivotMechanism.setAngle(
-        Units.radiansToDegrees(SimulationRobotConstants.kIntakeMinAngleRads)
-            + Units.rotationsToDegrees(
-                armEncoder.getPosition() / SimulationRobotConstants.kIntakeReduction));
-  }
+  //   // Update mechanism2d
+  //   intakePivotMechanism.setAngle(
+  //       Units.radiansToDegrees(SimulationRobotConstants.kIntakeMinAngleRads)
+  //           + Units.rotationsToDegrees(
+  //               armEncoder.getPosition() / SimulationRobotConstants.kIntakeReduction));
+  // }
 
-  /** Get the current drawn by each simulation physics model */
-  public double getSimulationCurrentDraw() {
-    return m_intakeSim.getCurrentDrawAmps();
-  }
+  // /** Get the current drawn by each simulation physics model */
+  // public double getSimulationCurrentDraw() {
+  //   return m_intakeSim.getCurrentDrawAmps();
+  // }
 
-  @Override
-  public void simulationPeriodic() {
-    // This method will be called once per scheduler run during simulation
-    m_intakeSim.setInput(armMotorSim.getAppliedOutput() * RobotController.getBatteryVoltage());
+  // @Override
+  // public void simulationPeriodic() {
+  //   // This method will be called once per scheduler run during simulation
+  //   m_intakeSim.setInput(armMotorSim.getAppliedOutput() * RobotController.getBatteryVoltage());
 
-    // Next, we update it. The standard loop time is 20ms.
-    m_intakeSim.update(0.020);
+  //   // Next, we update it. The standard loop time is 20ms.
+  //   m_intakeSim.update(0.020);
 
-    // Iterate the arm SPARK simulation
-    armMotorSim.iterate(
-        Units.radiansPerSecondToRotationsPerMinute(
-            m_intakeSim.getVelocityRadPerSec() * SimulationRobotConstants.kArmReduction),
-        RobotController.getBatteryVoltage(),
-        0.02);
+  //   // Iterate the arm SPARK simulation
+  //   armMotorSim.iterate(
+  //       Units.radiansPerSecondToRotationsPerMinute(
+  //           m_intakeSim.getVelocityRadPerSec() * SimulationRobotConstants.kArmReduction),
+  //       RobotController.getBatteryVoltage(),
+  //       0.02);
 
     // SimBattery is updated in Robot.java
   }
