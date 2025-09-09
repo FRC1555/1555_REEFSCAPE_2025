@@ -113,11 +113,11 @@ public class Robot extends TimedRobot {
    *
    * <p>This collects each subsystem's physics model's current draw to update the battery simulation
    */
-  @Override
-  public void simulationPeriodic() {
-    // SimBattery estimates loaded battery voltages
-    RoboRioSim.setVInVoltage(
-        BatterySim.calculateDefaultBatteryLoadedVoltage(
-            m_robotContainer.getSimulationTotalCurrentDraw()));
-  }
+  // @Override
+  // public void simulationPeriodic() {
+  //   // SimBattery estimates loaded battery voltages
+  //   RoboRioSim.setVInVoltage(
+  //       BatterySim.calculateDefaultBatteryLoadedVoltage(
+  //            m_robotContainer.getSimulationTotalCurrentDraw()));
+  // }
 }
