@@ -1,6 +1,6 @@
 // Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
+// Open Source Software; you can modify and/or share it under the terms of the
+// WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
 
@@ -37,6 +37,11 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
 import frc.robot.Robot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Transform2d;
+import frc.robot.Constants.VisionConstants;
+import edu.wpi.first.wpilibj.Timer;
 
 @SuppressWarnings("unused")
 public class DriveSubsystem extends SubsystemBase {
@@ -148,14 +153,17 @@ public class DriveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    m_odometry.update(
-        Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ)),
-        new SwerveModulePosition[] {
-            m_frontLeft.getPosition(),
-            m_frontRight.getPosition(),
-            m_rearLeft.getPosition(),
-            m_rearRight.getPosition()
-        });
+    super.periodic();
+
+    // Update odometry with vision pose
+    updateVisionPose();
+
+    // Publish robot pose to NetworkTables
+    robotPosePublisher.set(getPose());
+
+    // Log data to SmartDashboard
+    SmartDashboard.putNumber("Drivetrain/Rotation", getPose().getRotation().getDegrees());
+    SmartDashboard.putData("Drivetrain/Odometry", m_odometry);
   }
 
   /**
@@ -278,5 +286,22 @@ public class DriveSubsystem extends SubsystemBase {
 
   public void resetGyro() {
     m_gyro.setGyroAngle(IMUAxis.kZ, 0);
+  }
+
+  public void updateVisionPose() {
+    Pose2d visionPose = LimelightHelpers.getBotPose2d_wpiRed(VisionConstants.LIMELIGHT_NAMES[0]);
+    if (visionPose != null) {
+        m_odometry.addVisionMeasurement(visionPose, Timer.getFPGATimestamp());
+    }
+  }
+
+  public void autoAlign(Pose2d targetPose) {
+    ChassisSpeeds alignmentSpeeds = teleopAutoDriveController.calculate(getPose(), targetPose, 0, targetPose.getRotation());
+    drive(alignmentSpeeds.vxMetersPerSecond, alignmentSpeeds.vyMetersPerSecond, alignmentSpeeds.omegaRadiansPerSecond, true);
+  }
+
+  public void rotationalAlign(Rotation2d targetRotation) {
+    double rotationSpeed = getVelocityToRotate(targetRotation).in(Units.RadiansPerSecond);
+    drive(0, 0, rotationSpeed, true);
   }
 }
