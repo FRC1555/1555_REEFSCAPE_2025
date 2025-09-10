@@ -14,7 +14,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.units.measure.AngularVelocity;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.constVision;
+import frc.robot.Constants.VisionConstants;
 
 @Logged
 public class VisionSubsystem extends SubsystemBase {
@@ -59,7 +59,7 @@ public class VisionSubsystem extends SubsystemBase {
 
   public boolean rejectUpdate(PoseEstimate poseEstimate, AngularVelocity gyroRate, double areaThreshold) {
     // Angular velocity is too high to have accurate vision
-    if (gyroRate.compareTo(constVision.MAX_ANGULAR_VELOCITY) > 0) {
+    if (gyroRate.compareTo(VisionConstants.MAX_ANGULAR_VELOCITY) > 0) {
       return true;
     }
 
@@ -105,27 +105,27 @@ public class VisionSubsystem extends SubsystemBase {
     PoseEstimate currentEstimateBack = new PoseEstimate();
 
     if (useMegaTag2) {
-      currentEstimateRight = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(constVision.LIMELIGHT_NAMES[0]);
-      currentEstimateLeft = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(constVision.LIMELIGHT_NAMES[1]);
-      currentEstimateBack = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(constVision.LIMELIGHT_NAMES[2]);
+      currentEstimateRight = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(VisionConstants.LIMELIGHT_NAMES[0]);
+      currentEstimateLeft = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(VisionConstants.LIMELIGHT_NAMES[1]);
+      currentEstimateBack = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(VisionConstants.LIMELIGHT_NAMES[2]);
     } else {
-      currentEstimateRight = LimelightHelpers.getBotPoseEstimate_wpiBlue(constVision.LIMELIGHT_NAMES[0]);
-      currentEstimateLeft = LimelightHelpers.getBotPoseEstimate_wpiBlue(constVision.LIMELIGHT_NAMES[1]);
-      currentEstimateBack = LimelightHelpers.getBotPoseEstimate_wpiBlue(constVision.LIMELIGHT_NAMES[2]);
+      currentEstimateRight = LimelightHelpers.getBotPoseEstimate_wpiBlue(VisionConstants.LIMELIGHT_NAMES[0]);
+      currentEstimateLeft = LimelightHelpers.getBotPoseEstimate_wpiBlue(VisionConstants.LIMELIGHT_NAMES[1]);
+      currentEstimateBack = LimelightHelpers.getBotPoseEstimate_wpiBlue(VisionConstants.LIMELIGHT_NAMES[2]);
     }
 
     if (currentEstimateRight != null
-        && !rejectUpdate(currentEstimateRight, gyroRate, constVision.AREA_THRESHOLD_FRONT)) {
+        && !rejectUpdate(currentEstimateRight, gyroRate, VisionConstants.AREA_THRESHOLD_FRONT)) {
       lastEstimateRight = currentEstimateRight;
       rightPose = currentEstimateRight.pose;
       newRightEstimate = true;
     }
-    if (currentEstimateLeft != null && !rejectUpdate(currentEstimateLeft, gyroRate, constVision.AREA_THRESHOLD_FRONT)) {
+    if (currentEstimateLeft != null && !rejectUpdate(currentEstimateLeft, gyroRate, VisionConstants.AREA_THRESHOLD_FRONT)) {
       lastEstimateLeft = currentEstimateLeft;
       leftPose = currentEstimateLeft.pose;
       newLeftEstimate = true;
     }
-    if (currentEstimateBack != null && !rejectUpdate(currentEstimateBack, gyroRate, constVision.AREA_THRESHOLD_BACK)) {
+    if (currentEstimateBack != null && !rejectUpdate(currentEstimateBack, gyroRate, VisionConstants.AREA_THRESHOLD_BACK)) {
       lastEstimateBack = currentEstimateBack;
       backPose = currentEstimateBack.pose;
       newBackEstimate = true;

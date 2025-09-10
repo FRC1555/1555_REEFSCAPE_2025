@@ -181,7 +181,7 @@ public final class Constants {
   //   public static final double kIntakeLongBarLength = 0.3048;
   //   public static final double kIntakeBarAngleRads = Units.degreesToRadians(-60);
   // }
-   public static class constVision {
+   public static class VisionConstants {
     public static final String[] LIMELIGHT_NAMES = new String[] { "limelight-right", "limelight-left",
         "limelight-back" };
 
