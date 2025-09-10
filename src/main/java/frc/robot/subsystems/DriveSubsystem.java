@@ -24,6 +24,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -38,6 +40,8 @@ import frc.robot.Robot;
 
 @SuppressWarnings("unused")
 public class DriveSubsystem extends SubsystemBase {
+  StructPublisher<Pose2d> robotPosePublisher = NetworkTableInstance.getDefault()
+    .getStructTopic("/SmartDashboard/Drivetrain/Robot Pose", Pose2d.struct).publish();
   // Create MAXSwerveModules
   private final MAXSwerveModule m_frontLeft = new MAXSwerveModule(
       DriveConstants.kFrontLeftDrivingCanId,
@@ -144,17 +148,6 @@ public class DriveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // Update the odometry in the periodic block
-    // LimelightHelpers.SetRobotOrientation("limelight", m_gyro.getAngle(), 0.0, 0.0, 0.0, 0.0, 0.0);
-
-    // Get the pose estimate
-    // LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
-    // if(!Robot.isSimulation()){
-    // // Add it to your pose estimator
-    // m_odometry.addVisionMeasurement(
-    //     limelightMeasurement.pose,
-    //     limelightMeasurement.timestampSeconds);
-    // }
     m_odometry.update(
         Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ)),
         new SwerveModulePosition[] {
