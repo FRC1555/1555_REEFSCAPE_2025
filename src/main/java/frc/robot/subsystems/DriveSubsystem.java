@@ -16,6 +16,7 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import edu.wpi.first.wpilibj.Joystick;
 
 import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.controller.HolonomicDriveController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -24,6 +25,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
@@ -79,7 +81,13 @@ public class DriveSubsystem extends SubsystemBase {
   //Speed Control variables
   public double currentDriveSpeed = 0.5;
 
-
+  // Holonomic Drive Controller object initialization
+  HolonomicDriveController HolonomicDriveController = new HolonomicDriveController(
+    new PIDConstants(5.0, 0.0, 0.0), // X-axis PID controller
+    new PIDConstants(5.0, 0.0, 0.0), // Y-axis PID controller
+    new ProfiledPIDController(5.0, 0.0, 0.0, // Theta (rotation)
+        new TrapezoidProfile.Constraints(rotDelivered, currentDriveSpeed)
+  );
 
   // Odometry class for tracking robot pose
   SwerveDrivePoseEstimator m_odometry = new SwerveDrivePoseEstimator(
@@ -296,7 +304,7 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void autoAlign(Pose2d targetPose) {
-    ChassisSpeeds alignmentSpeeds = teleopAutoDriveController.calculate(getPose(), targetPose, 0, targetPose.getRotation());
+    ChassisSpeeds alignmentSpeeds = HolonomicDriveController.calculate(getPose(), targetPose, 0, targetPose.getRotation());
     drive(alignmentSpeeds.vxMetersPerSecond, alignmentSpeeds.vyMetersPerSecond, alignmentSpeeds.omegaRadiansPerSecond, true);
   }
 
