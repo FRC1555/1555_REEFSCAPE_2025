@@ -5,9 +5,11 @@ import com.revrobotics.spark.SparkClosedLoopController;
 
 public class ColeBTesting{
 
-    public class init{}
+    private double motorSpeed = 0.25;
 
-    public class loop{}
+    private SparkMax coleMotor =
+        new SparkMax(0.25, MotorType.kBrushless);
+    
 
 
     
