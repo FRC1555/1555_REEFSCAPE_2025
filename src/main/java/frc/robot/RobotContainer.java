@@ -55,7 +55,7 @@ public class RobotContainer {
   private final CoralSubsystem m_coralSubSystem = new CoralSubsystem();
   private final AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
 
-  // The driver's controller
+  // The driver's controllers
   public Joystick m_driverController =
       new Joystick(OIConstants.kDriverControllerPort);
   public CommandXboxController m_manipController =
