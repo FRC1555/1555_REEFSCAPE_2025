@@ -60,6 +60,8 @@ public class RobotContainer {
       new Joystick(OIConstants.kDriverControllerPort);
   public CommandXboxController m_manipController =
       new CommandXboxController(OIConstants.kManipControllerPort);
+  public Joystick m_driveBoard =
+      new Joystick(OIConstants.kDriveBoardPort);
 
   // Joystick buttons for speed control
   public JoystickButton fullSendButton = new JoystickButton(m_driverController, 1);
