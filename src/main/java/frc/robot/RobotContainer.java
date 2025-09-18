@@ -63,11 +63,25 @@ public class RobotContainer {
   public Joystick m_driveBoard =
       new Joystick(OIConstants.kDriveBoardPort);
 
-  // Joystick buttons for speed control
+  // Joystick buttons for speed control iBnitialization
   public JoystickButton fullSendButton = new JoystickButton(m_driverController, 1);
   public JoystickButton highSpeedButton = new JoystickButton(m_driverController, 2);
   public JoystickButton midSpeedButton = new JoystickButton(m_driverController, 3);
   public JoystickButton lowSpeedButton = new JoystickButton(m_driverController, 4);
+
+  // Button Board position buttons initialization
+  public JoystickButton buttonA = new JoystickButton(m_driveBoard, 1); 
+  public JoystickButton buttonB = new JoystickButton(m_driveBoard, 2);
+  public JoystickButton buttonC = new JoystickButton(m_driveBoard, 3);
+  public JoystickButton buttonD = new JoystickButton(m_driveBoard, 4);
+  public JoystickButton buttonE = new JoystickButton(m_driveBoard, 5);
+  public JoystickButton buttonF = new JoystickButton(m_driveBoard, 6);
+  public JoystickButton buttonG = new JoystickButton(m_driveBoard, 7);
+  public JoystickButton buttonH = new JoystickButton(m_driveBoard, 8);
+  public JoystickButton buttonI = new JoystickButton(m_driveBoard, 9);
+  public JoystickButton buttonJ = new JoystickButton(m_driveBoard, 10);
+  public JoystickButton buttonK = new JoystickButton(m_driveBoard, 11);
+  public JoystickButton buttonL = new JoystickButton(m_driveBoard, 12);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
