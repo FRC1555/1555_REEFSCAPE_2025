@@ -19,6 +19,16 @@ import edu.wpi.first.math.util.Units;
  */
 public final class Constants {
 
+  public static final class ClimbSubsystemConstants { //#ClimbSystem
+    public static final int kClimbMotorCanId = 15;
+    public static final class ClimbSetpoints {
+      public static final double kNeutral = 0;
+      public static final double kForward = 1;
+      public static final double kBackward = -1;
+
+    }
+}
+  
   public static final class CoralSubsystemConstants { //#CoralSystem
     public static final int kElevatorMotorCanId = 4;
     public static final int kArmMotorCanId = 3;

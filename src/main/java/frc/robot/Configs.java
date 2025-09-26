@@ -55,6 +55,20 @@ public final class Configs {
     }
   }
 
+  public static final class ClimbSubsystem {
+    public static final SparkMaxConfig climbConfig = new SparkMaxConfig();
+    static{
+      climbConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
+      climbConfig
+          .closedLoop
+          .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+          .p(0.1)
+          .outputRange(-1, 1)
+          .maxMotion
+          .maxVelocity(2000)
+          .maxAcceleration(10000);
+    }
+  }
   public static final class CoralSubsystem {
     public static final SparkMaxConfig armConfig = new SparkMaxConfig();
     public static final SparkMaxConfig elevatorConfig = new SparkMaxConfig();
