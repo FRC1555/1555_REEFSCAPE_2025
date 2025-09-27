@@ -71,18 +71,18 @@ public class RobotContainer {
   public JoystickButton lowSpeedButton = new JoystickButton(m_driverController, 4);
 
   // Button Board position buttons initialization
-  public JoystickButton buttonA = new JoystickButton(m_driveBoard, 1); 
-  public JoystickButton buttonB = new JoystickButton(m_driveBoard, 2);
-  public JoystickButton buttonC = new JoystickButton(m_driveBoard, 3);
-  public JoystickButton buttonD = new JoystickButton(m_driveBoard, 4);
-  public JoystickButton buttonE = new JoystickButton(m_driveBoard, 5);
-  public JoystickButton buttonF = new JoystickButton(m_driveBoard, 6);
+  public JoystickButton buttonA = new JoystickButton(m_driveBoard, 6); 
+  public JoystickButton buttonB = new JoystickButton(m_driveBoard, 9);
+  public JoystickButton buttonC = new JoystickButton(m_driveBoard, 12);
+  public JoystickButton buttonD = new JoystickButton(m_driveBoard, 11);
+  public JoystickButton buttonE = new JoystickButton(m_driveBoard, 10);
+  public JoystickButton buttonF = new JoystickButton(m_driveBoard, 8);
   public JoystickButton buttonG = new JoystickButton(m_driveBoard, 7);
-  public JoystickButton buttonH = new JoystickButton(m_driveBoard, 8);
-  public JoystickButton buttonI = new JoystickButton(m_driveBoard, 9);
-  public JoystickButton buttonJ = new JoystickButton(m_driveBoard, 10);
-  public JoystickButton buttonK = new JoystickButton(m_driveBoard, 11);
-  public JoystickButton buttonL = new JoystickButton(m_driveBoard, 12);
+  public JoystickButton buttonH = new JoystickButton(m_driveBoard, 5);
+  public JoystickButton buttonI = new JoystickButton(m_driveBoard, 3);
+  public JoystickButton buttonJ = new JoystickButton(m_driveBoard, 1);
+  public JoystickButton buttonK = new JoystickButton(m_driveBoard, 2);
+  public JoystickButton buttonL = new JoystickButton(m_driveBoard, 4);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -188,7 +188,20 @@ public class RobotContainer {
     midSpeedButton.onTrue(new InstantCommand(() -> m_robotDrive.setDriveSpeed(0.5)));
     lowSpeedButton.onTrue(new InstantCommand(() -> m_robotDrive.setDriveSpeed(0.25)));
 
-        // Bind buttons 5, 6, 7, and 8 to reset the gyro
+    // Button Board testing
+    buttonA.onTrue(new InstantCommand(() -> System.out.println("Button A pressed")));
+    buttonB.onTrue(new InstantCommand(() -> System.out.println("Button B pressed")));
+    buttonC.onTrue(new InstantCommand(() -> System.out.println("Button C pressed")));
+    buttonD.onTrue(new InstantCommand(() -> System.out.println("Button D pressed")));
+    buttonE.onTrue(new InstantCommand(() -> System.out.println("Button E pressed")));
+    buttonF.onTrue(new InstantCommand(() -> System.out.println("Button F pressed")));
+    buttonG.onTrue(new InstantCommand(() -> System.out.println("Button G pressed")));
+    buttonH.onTrue(new InstantCommand(() -> System.out.println("Button H pressed")));
+    buttonI.onTrue(new InstantCommand(() -> System.out.println("Button I pressed")));
+    buttonJ.onTrue(new InstantCommand(() -> System.out.println("Button J pressed")));
+    buttonK.onTrue(new InstantCommand(() -> System.out.println("Button K pressed")));
+    buttonL.onTrue(new InstantCommand(() -> System.out.println("Button L pressed")));
+    // Bind buttons 5, 6, 7, and 8 to reset the gyro
         new JoystickButton(m_driverController, 5)
             .onTrue(new InstantCommand(m_robotDrive::resetGyro, m_robotDrive));
         new JoystickButton(m_driverController, 6)
