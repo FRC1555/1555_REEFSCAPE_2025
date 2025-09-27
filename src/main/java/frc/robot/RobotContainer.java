@@ -40,6 +40,7 @@ import frc.robot.subsystems.CoralSubsystem;
 import frc.robot.subsystems.CoralSubsystem.Setpoint;
 import frc.robot.subsystems.DriveSubsystem;
 import java.util.List;
+import java.util.function.DoubleSupplier;
 
 
 /*
@@ -127,8 +128,26 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
+    // Lambdas to let us grab the axis values from the button board.
+    DoubleSupplier get1Axis = () -> m_driveBoard.getRawAxis(1); // Face & Trough
+    DoubleSupplier get2Axis = () -> m_driveBoard.getRawAxis(2); // Coral Station selection
+    
+    // Actually initializing the variables by calling the lambdas
+    double axis1Value = get1Axis.getAsDouble();
+    double axis2Value = get2Axis.getAsDouble();
 
-
+    // First debug draft of axis value reading
+    if (axis1Value > 0.5) {
+        System.out.println("Axis 1 is greater than 0.5");
+    } else if (axis1Value < -0.5) {
+        System.out.println("Axis 1 is less than -0.5");
+    }
+    if (axis2Value > 0.5) {
+        System.out.println("Axis 2 is greater than 0.5");
+    } else if (axis2Value < -0.5) {
+        System.out.println("Axis 2 is less than -0.5");
+    }
+   
     // Left Bumper -> Run tube intake
     m_manipController.rightBumper().whileTrue(m_coralSubSystem.runIntakeCommand());
 
