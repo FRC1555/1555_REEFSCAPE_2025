@@ -32,6 +32,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
@@ -84,6 +85,14 @@ public class RobotContainer {
   public JoystickButton buttonK = new JoystickButton(m_driveBoard, 2);
   public JoystickButton buttonL = new JoystickButton(m_driveBoard, 4);
 
+
+  // Creating the buttons from the Buttonboard axes using triggers
+  public Trigger faceValueTrigger = new Trigger(() -> m_driveBoard.getX() > 0.5);
+  public Trigger troughValueTrigger = new Trigger(() -> m_driveBoard.getX() < -0.5);
+  public Trigger leftCoralStationTrigger = new Trigger(() -> m_driveBoard.getY() > 0.5);
+  public Trigger rightCoralStationTrigger = new Trigger(() -> m_driveBoard.getY() < -0.5);
+  public int faceState = 0;
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     //registering named Commands for Algae
@@ -117,7 +126,9 @@ public class RobotContainer {
             m_robotDrive));
 
     // Set the ball intake to in/out when not running based on internal state
-    m_algaeSubsystem.setDefaultCommand(m_algaeSubsystem.idleCommand());
+    m_algaeSubsystem.setDefaultCommand(m_algaeSubsystem.idleCommand());  
+
+    
   }
 
   /**
@@ -128,26 +139,53 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    // Lambdas to let us grab the axis values from the button board.
-    DoubleSupplier get1Axis = () -> m_driveBoard.getRawAxis(1); // Face & Trough
-    DoubleSupplier get2Axis = () -> m_driveBoard.getRawAxis(2); // Coral Station selection
-    
-    // Actually initializing the variables by calling the lambdas
-    double axis1Value = get1Axis.getAsDouble();
-    double axis2Value = get2Axis.getAsDouble();
+    // Actually binding the axes buttons
+    // This one should work in such a way that I can hold the button to set the variable to face, and release it to be neutral.
+    faceValueTrigger
+        .onTrue(
+            new InstantCommand(() -> {
+                faceState = 1;
+            })
+        );
+    faceValueTrigger
+        .onFalse(
+            new InstantCommand(() -> {
+                if (troughValueTrigger.getAsBoolean()) {
+                    faceState = 3;
+                } else {
+                    faceState = 0;
+                }
+            })
+        );
 
-    // First debug draft of axis value reading
-    if (axis1Value > 0.5) {
-        System.out.println("Axis 1 is greater than 0.5");
-    } else if (axis1Value < -0.5) {
-        System.out.println("Axis 1 is less than -0.5");
-    }
-    if (axis2Value > 0.5) {
-        System.out.println("Axis 2 is greater than 0.5");
-    } else if (axis2Value < -0.5) {
-        System.out.println("Axis 2 is less than -0.5");
-    }
-   
+    // Same as above but for trough
+    troughValueTrigger 
+        .onTrue(
+            new InstantCommand(() -> {
+                faceState = -1;
+            })
+        );
+    troughValueTrigger
+        .onFalse(
+            new InstantCommand(() -> {
+                faceState = 0;
+            })
+        );
+    
+    // Binding the Coral Station triggers, using print statements as placeholders
+    leftCoralStationTrigger
+        .onTrue(
+            new InstantCommand(() -> {
+                System.out.println("Placeholder LCS");
+            })
+        );
+    rightCoralStationTrigger
+        .onTrue(
+            new InstantCommand(() -> {
+                System.out.println("Placholder RCS");
+            })
+        );
+        
     // Left Bumper -> Run tube intake
     m_manipController.rightBumper().whileTrue(m_coralSubSystem.runIntakeCommand());
 
