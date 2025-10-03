@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.101906892890455,
-        "y": 1.3492729127862473
+        "x": 2.2229999999983607,
+        "y": 1.4120000000003814
       },
       "isLocked": false,
       "linkedName": "Coral Station DS 3"
@@ -20,15 +20,20 @@
         "y": 2.913499999999999
       },
       "prevControl": {
-        "x": 4.544178176046446,
-        "y": 2.4827093295303775
+        "x": 4.551654863873579,
+        "y": 2.434291154046507
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Position F"
+      "linkedName": "Position F Trough"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.7593360995850519,
+      "rotationDegrees": -60.01065166682808
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -42,7 +47,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 120.24065072837092
+    "rotation": -59.55871958253188
   },
   "reversed": false,
   "folder": "F",
