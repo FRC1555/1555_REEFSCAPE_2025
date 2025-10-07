@@ -12,6 +12,10 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathConstraints;
 import edu.wpi.first.math.util.Units;
 
+import java.lang.invoke.LambdaConversionException;
+import java.util.function.BooleanSupplier;
+
+
 /**
  * Vision subsystem that integrates Limelight AprilTag detection with PathPlanner
  * for dynamic robot pose estimation and path adjustment
@@ -19,6 +23,7 @@ import edu.wpi.first.math.util.Units;
 public class VisionSubsystem extends SubsystemBase {
     private final NetworkTable limelightTable;
     private final DriveSubsystem driveSubsystem;
+    private final BooleanSupplier autoRunSupplier;
     
     // AprilTag field layout configuration
     private static final double APRILTAG_POSITION_TOLERANCE = 0.1; // meters
@@ -29,9 +34,10 @@ public class VisionSubsystem extends SubsystemBase {
     private Pose2d lastValidPose = null;
     private double lastUpdateTime = 0;
     
-    public VisionSubsystem(DriveSubsystem driveSubsystem) {
+    public VisionSubsystem(DriveSubsystem driveSubsystem, BooleanSupplier autoRunSupplier) {
         this.driveSubsystem = driveSubsystem;
         this.limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
+        this.autoRunSupplier = autoRunSupplier;
         
         // Configure Limelight pipeline for AprilTag detection
         configureLimelight();
@@ -98,13 +104,14 @@ public class VisionSubsystem extends SubsystemBase {
         
         // Update pose estimator if confidence is sufficient
         if (confidence > APRILTAG_CONFIDENCE_THRESHOLD) {
-            if (!autoRunning) {
+            if (!autoRunSupplier.getAsBoolean()) {
                 // Update the drive subsystem's pose estimator
                 driveSubsystem.addVisionMeasurement(visionPose, timestamp, confidence);
             
                 lastValidPose = visionPose;
                 lastUpdateTime = timestamp;
-        }}
+            }
+        }
     }
     
     /**

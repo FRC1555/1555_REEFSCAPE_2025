@@ -1,6 +1,6 @@
 // Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
+// Open Source Software; you can modify and/or share it under the terms of the
+// WPILib BSD license file in the root directory of this project.
 //Max smells bad
 package frc.robot;
 
@@ -40,6 +40,7 @@ import frc.robot.subsystems.AlgaeSubsystem;
 import frc.robot.subsystems.CoralSubsystem;
 import frc.robot.subsystems.CoralSubsystem.Setpoint;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.commands.*;
 import java.util.List;
 import java.util.function.DoubleSupplier;
@@ -96,7 +97,16 @@ public class RobotContainer {
 
   // Current state variables
   private String currentDestination = "";
-  private boolean autoRunning = false;
+  public volatile boolean autoRunning = false;
+  // This exists to pass a single variable to the vision subsystem.
+  private final VisionSubsystem visionSubsystem = new VisionSubsystem(m_robotDrive, this::isAutoRunning);
+  private boolean isAutoRunning() {
+    return this.autoRunning;
+  }
+
+  public void toggleAutoRunning() {
+      autoRunning = !autoRunning;
+  }
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
