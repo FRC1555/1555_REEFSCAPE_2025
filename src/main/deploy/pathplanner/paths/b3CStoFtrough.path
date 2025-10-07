@@ -3,32 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.566,
-        "y": 4.0249999999999995
+        "x": 1.287,
+        "y": 0.95375
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.298500000000001,
-        "y": 3.420499999999999
+        "x": 2.2229999999983607,
+        "y": 1.4120000000003814
       },
       "isLocked": false,
-      "linkedName": "STRUT"
+      "linkedName": "Coral Station DS 3"
     },
     {
       "anchor": {
-        "x": 5.013714014263546,
-        "y": 2.782509314451306
+        "x": 5.3527499999999995,
+        "y": 2.913499999999999
       },
       "prevControl": {
-        "x": 5.822964014263545,
-        "y": 2.9385093144513066
+        "x": 4.551654863873579,
+        "y": 2.434291154046507
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Position E"
+      "linkedName": "Position F Trough"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.7593360995850519,
+      "rotationDegrees": -60.01065166682808
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -42,13 +47,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 120.5408926131445
+    "rotation": -59.55871958253188
   },
   "reversed": false,
-  "folder": "olde",
+  "folder": "oldf",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 53.67317404787975
   },
   "useDefaultConstraints": true
 }

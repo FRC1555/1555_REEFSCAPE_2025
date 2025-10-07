@@ -87,12 +87,12 @@ public final class Constants {
     public static final double kBackLeftChassisAngularOffset = Math.PI;
     public static final double kBackRightChassisAngularOffset = Math.PI / 2;
 
-    // SPARK MAX CAN IDs
+    // SPARK FLEX CAN IDs
     public static final int kFrontLeftDrivingCanId = 6;
     public static final int kRearLeftDrivingCanId = 12;
     public static final int kFrontRightDrivingCanId = 8;
     public static final int kRearRightDrivingCanId = 10;
-
+    // SPARK MAX CAN IDs
     public static final int kFrontLeftTurningCanId = 5;
     public static final int kRearLeftTurningCanId = 11;
     public static final int kFrontRightTurningCanId = 7;
@@ -122,6 +122,7 @@ public final class Constants {
   public static final class OIConstants { //#Controls
     public static final int kDriverControllerPort = 0;
     public static final int kManipControllerPort = 1;
+    public static final int kDriveBoardPort = 2;
     public static final double kDriveDeadband = 0.01;
     public static final double kTriggerButtonThreshold = 0.2;
   }

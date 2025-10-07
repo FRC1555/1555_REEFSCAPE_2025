@@ -8,11 +8,11 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.286999999999999,
-        "y": 0.95375
+        "x": 2.101906892890455,
+        "y": 1.3492729127862473
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Coral Station DS 3"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 2.913499999999999
       },
       "prevControl": {
-        "x": 4.4655000000000005,
-        "y": 2.3577499999999993
+        "x": 4.544178176046446,
+        "y": 2.4827093295303775
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,10 +42,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 123.07067782276164
+    "rotation": 120.24065072837092
   },
   "reversed": false,
-  "folder": "F",
+  "folder": "oldf",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 53.67317404787975
