@@ -40,6 +40,7 @@ import frc.robot.subsystems.AlgaeSubsystem;
 import frc.robot.subsystems.CoralSubsystem;
 import frc.robot.subsystems.CoralSubsystem.Setpoint;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.commands.*;
 import java.util.List;
 import java.util.function.DoubleSupplier;
 
@@ -92,6 +93,10 @@ public class RobotContainer {
   public Trigger leftCoralStationTrigger = new Trigger(() -> m_driveBoard.getY() > 0.5);
   public Trigger rightCoralStationTrigger = new Trigger(() -> m_driveBoard.getY() < -0.5);
   public int faceState = 0;
+
+  // Current state variables
+  private String currentDestination = "";
+  private boolean autoRunning = false;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -172,13 +177,20 @@ public class RobotContainer {
             })
         );
     
-    // Binding the Coral Station triggers, using print statements as placeholders
-    leftCoralStationTrigger
-        .onTrue(
-            new InstantCommand(() -> {
-                System.out.println("Placeholder LCS");
-            })
-        );
+    // Binding the Coral Station triggers to the newly created Pathfinding command. 
+    leftCoralStationTrigger.onTrue(new InstantCommand(() -> {
+        if (!autoRunning) {
+            currentDestination = "b1CSpos"; // must match your PathPlanner file name
+    
+            // Build the auto command dynamically
+            Command autoCmd = Pathfinding.goTo(currentDestination)
+                .andThen(() -> autoRunning = false); // mark complete when done
+    
+            // Schedule it and mark as running
+            autoCmd.schedule();
+            autoRunning = true;
+        }
+    }));
     rightCoralStationTrigger
         .onTrue(
             new InstantCommand(() -> {
