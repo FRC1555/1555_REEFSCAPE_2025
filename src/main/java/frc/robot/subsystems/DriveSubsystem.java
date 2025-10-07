@@ -12,6 +12,9 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.path.PathConstraints;
+
+import edu.wpi.first.math.util.Units;
 
 import edu.wpi.first.wpilibj.Joystick;
 
@@ -122,6 +125,45 @@ public class DriveSubsystem extends SubsystemBase {
     setModuleStates(Constants.DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds));
   }
 
+
+  /**
+  *    * Follows a path to target pose
+  */
+ public void followPath(Pose2d target, PathConstraints constraints) {
+     AutoBuilder.pathfindToPose(target, constraints);
+  }
+ /**
+
+  * Adds vision measurement with dynamic standard deviations
+
+  * @param visionPose Pose from vision system
+
+  * @param timestamp Timestamp of measurement
+
+  * @param confidence Confidence value (0-1)
+
+  */
+  public void addVisionMeasurement(Pose2d visionPose, double timestamp, double confidence) {
+
+  // Create standard deviations based on confidence
+
+  // Lower confidence = higher standard deviations = less trust
+
+  double xyStdDev = 0.5 / confidence; // meters
+
+  double thetaStdDev = 6.0 / confidence; // degrees
+
+  
+
+  edu.wpi.first.math.Matrix<edu.wpi.first.math.numbers.N3, edu.wpi.first.math.numbers.N1> stdDevs = edu.wpi.first.math.VecBuilder.fill(
+
+      xyStdDev, 
+
+      xyStdDev, 
+
+      Units.degreesToRadians(thetaStdDev)
+
+  );}
   public void resetPose(Pose2d pose){
     m_odometry.resetPosition(
      Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ)),
