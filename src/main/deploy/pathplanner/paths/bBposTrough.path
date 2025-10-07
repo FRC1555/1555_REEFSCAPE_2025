@@ -3,32 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.566,
-        "y": 4.0249999999999995
+        "x": 2.4224238054524125,
+        "y": 3.857459692708709
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.298500000000001,
-        "y": 3.420499999999999
+        "x": 2.9800016903152997,
+        "y": 3.8666541187504158
       },
       "isLocked": false,
-      "linkedName": "STRUT"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.013714014263546,
-        "y": 2.782509314451306
+        "x": 3.1508519334856264,
+        "y": 3.857459692708709
       },
       "prevControl": {
-        "x": 5.822964014263545,
-        "y": 2.9385093144513066
+        "x": 2.7836309640881205,
+        "y": 3.8607808316181274
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Position E"
+      "linkedName": "Position B Trough"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.01,
+      "rotationDegrees": 180.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -42,13 +47,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 120.5408926131445
+    "rotation": 179.78541006887053
   },
   "reversed": false,
-  "folder": "olde",
+  "folder": "PosPaths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 179.95373030847605
   },
   "useDefaultConstraints": true
 }
