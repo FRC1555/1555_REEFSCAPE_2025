@@ -191,12 +191,19 @@ public class RobotContainer {
             autoRunning = true;
         }
     }));
-    rightCoralStationTrigger
-        .onTrue(
-            new InstantCommand(() -> {
-                System.out.println("Placholder RCS");
-            })
-        );
+    rightCoralStationTrigger.onTrue(new InstantCommand(() -> {
+        if (!autoRunning) {
+            currentDestination = "b3CSpos"; // must match your PathPlanner file name
+    
+            // Build the auto command dynamically
+            Command autoCmd = Pathfinding.goTo(currentDestination)
+                .andThen(() -> autoRunning = false); // mark complete when done
+    
+            // Schedule it and mark as running
+            autoCmd.schedule();
+            autoRunning = true;
+        }
+    }));
         
     // Left Bumper -> Run tube intake
     m_manipController.rightBumper().whileTrue(m_coralSubSystem.runIntakeCommand());
@@ -239,8 +246,64 @@ public class RobotContainer {
     lowSpeedButton.onTrue(new InstantCommand(() -> m_robotDrive.setDriveSpeed(0.25)));
 
     // Button Board testing
-    buttonA.onTrue(new InstantCommand(() -> System.out.println("Button A pressed")));
-    buttonB.onTrue(new InstantCommand(() -> System.out.println("Button B pressed")));
+    buttonA.onTrue(
+        new InstantCommand(() -> {
+            if (faceState == 1 && !autoRunning) {
+                currentDestination = "bAposFace"; // must match your PathPlanner file name
+        
+                // Build the auto command dynamically
+                Command autoCmd = Pathfinding.goTo(currentDestination)
+                    .andThen(() -> autoRunning = false); // mark complete when done
+        
+                // Schedule it and mark as running
+                autoCmd.schedule();
+                autoRunning = true;
+            }
+            else if (faceState == -1 && !autoRunning) {
+                currentDestination = "bAposTrough"; // must match your PathPlanner file name
+        
+                // Build the auto command dynamically
+                Command autoCmd = Pathfinding.goTo(currentDestination)
+                    .andThen(() -> autoRunning = false); // mark complete when done
+        
+                // Schedule it and mark as running
+                autoCmd.schedule();
+                autoRunning = true;
+            }
+            else if (faceState == 0) {
+                System.out.println("Button A pressed, but no valid direction selected");
+            }
+        })
+    );
+    buttonB.onTrue(
+        new InstantCommand(() -> {
+            if (faceState == 1 && !autoRunning) {
+                currentDestination = "bBposFace"; // must match your PathPlanner file name
+        
+                // Build the auto command dynamically
+                Command autoCmd = Pathfinding.goTo(currentDestination)
+                    .andThen(() -> autoRunning = false); // mark complete when done
+        
+                // Schedule it and mark as running
+                autoCmd.schedule();
+                autoRunning = true;
+            }
+            else if (faceState == -1 && !autoRunning) {
+                currentDestination = "bBposTrough"; // must match your PathPlanner file name
+        
+                // Build the auto command dynamically
+                Command autoCmd = Pathfinding.goTo(currentDestination)
+                    .andThen(() -> autoRunning = false); // mark complete when done
+        
+                // Schedule it and mark as running
+                autoCmd.schedule();
+                autoRunning = true;
+            }
+            else if (faceState == 0) {
+                System.out.println("Button B pressed, but no valid direction selected");
+            }
+        })
+    );
     buttonC.onTrue(new InstantCommand(() -> System.out.println("Button C pressed")));
     buttonD.onTrue(new InstantCommand(() -> System.out.println("Button D pressed")));
     buttonE.onTrue(new InstantCommand(() -> System.out.println("Button E pressed")));
