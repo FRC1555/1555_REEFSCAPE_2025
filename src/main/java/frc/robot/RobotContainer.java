@@ -304,25 +304,307 @@ public class RobotContainer {
             }
         })
     );
-    buttonC.onTrue(new InstantCommand(() -> System.out.println("Button C pressed")));
-    buttonD.onTrue(new InstantCommand(() -> System.out.println("Button D pressed")));
-    buttonE.onTrue(new InstantCommand(() -> System.out.println("Button E pressed")));
-    buttonF.onTrue(new InstantCommand(() -> System.out.println("Button F pressed")));
-    buttonG.onTrue(new InstantCommand(() -> System.out.println("Button G pressed")));
-    buttonH.onTrue(new InstantCommand(() -> System.out.println("Button H pressed")));
-    buttonI.onTrue(new InstantCommand(() -> System.out.println("Button I pressed")));
-    buttonJ.onTrue(new InstantCommand(() -> System.out.println("Button J pressed")));
-    buttonK.onTrue(new InstantCommand(() -> System.out.println("Button K pressed")));
-    buttonL.onTrue(new InstantCommand(() -> System.out.println("Button L pressed")));
-    // Bind buttons 5, 6, 7, and 8 to reset the gyro
-        new JoystickButton(m_driverController, 5)
-            .onTrue(new InstantCommand(m_robotDrive::resetGyro, m_robotDrive));
-        new JoystickButton(m_driverController, 6)
-            .onTrue(new InstantCommand(m_robotDrive::resetGyro, m_robotDrive));
-        new JoystickButton(m_driverController, 7)
-            .onTrue(new InstantCommand(m_robotDrive::resetGyro, m_robotDrive));
-        new JoystickButton(m_driverController, 8)
-            .onTrue(new InstantCommand(m_robotDrive::resetGyro, m_robotDrive));
+    buttonC.onTrue(
+        new InstantCommand(() -> {
+            if (faceState == 1 && !autoRunning) {
+                currentDestination = "bCposFace"; // must match your PathPlanner file name
+        
+                // Build the auto command dynamically
+                Command autoCmd = Pathfinding.goTo(currentDestination)
+                    .andThen(() -> autoRunning = false); // mark complete when done
+        
+                // Schedule it and mark as running
+                autoCmd.schedule();
+                autoRunning = true;
+            }
+            else if (faceState == -1 && !autoRunning) {
+                currentDestination = "bCposTrough"; // must match your PathPlanner file name
+        
+                // Build the auto command dynamically
+                Command autoCmd = Pathfinding.goTo(currentDestination)
+                    .andThen(() -> autoRunning = false); // mark complete when done
+        
+                // Schedule it and mark as running
+                autoCmd.schedule();
+                autoRunning = true;
+            }
+            else if (faceState == 0) {
+                System.out.println("Button C pressed, but no valid direction selected");
+            }
+        })
+    );
+    buttonD.onTrue(
+        new InstantCommand(() -> {
+            if (faceState == 1 && !autoRunning) {
+                currentDestination = "bDposFace"; // must match your PathPlanner file name
+        
+                // Build the auto command dynamically
+                Command autoCmd = Pathfinding.goTo(currentDestination)
+                    .andThen(() -> autoRunning = false); // mark complete when done
+        
+                // Schedule it and mark as running
+                autoCmd.schedule();
+                autoRunning = true;
+            }
+            else if (faceState == -1 && !autoRunning) {
+                currentDestination = "bDposTrough"; // must match your PathPlanner file name
+        
+                // Build the auto command dynamically
+                Command autoCmd = Pathfinding.goTo(currentDestination)
+                    .andThen(() -> autoRunning = false); // mark complete when done
+        
+                // Schedule it and mark as running
+                autoCmd.schedule();
+                autoRunning = true;
+            }
+            else if (faceState == 0) {
+                System.out.println("Button D pressed, but no valid direction selected");
+            }
+        })
+    );
+    buttonE.onTrue(
+        new InstantCommand(() -> {
+            if (faceState == 1 && !autoRunning) {
+                currentDestination = "bEposFace"; // must match your PathPlanner file name
+        
+                // Build the auto command dynamically
+                Command autoCmd = Pathfinding.goTo(currentDestination)
+                    .andThen(() -> autoRunning = false); // mark complete when done
+        
+                // Schedule it and mark as running
+                autoCmd.schedule();
+                autoRunning = true;
+            }
+            else if (faceState == -1 && !autoRunning) {
+                currentDestination = "bEposTrough"; // must match your PathPlanner file name
+        
+                // Build the auto command dynamically
+                Command autoCmd = Pathfinding.goTo(currentDestination)
+                    .andThen(() -> autoRunning = false); // mark complete when done
+        
+                // Schedule it and mark as running
+                autoCmd.schedule();
+                autoRunning = true;
+            }
+            else if (faceState == 0) {
+                System.out.println("Button E pressed, but no valid direction selected");
+            }
+        })
+    );
+    buttonF.onTrue(
+        new InstantCommand(() -> {
+            if (faceState == 1 && !autoRunning) {
+                currentDestination = "bFposFace"; // must match your PathPlanner file name
+        
+                // Build the auto command dynamically
+                Command autoCmd = Pathfinding.goTo(currentDestination)
+                    .andThen(() -> autoRunning = false); // mark complete when done
+        
+                // Schedule it and mark as running
+                autoCmd.schedule();
+                autoRunning = true;
+            }
+            else if (faceState == -1 && !autoRunning) {
+                currentDestination = "bFposTrough"; // must match your PathPlanner file name
+        
+                // Build the auto command dynamically
+                Command autoCmd = Pathfinding.goTo(currentDestination)
+                    .andThen(() -> autoRunning = false); // mark complete when done
+        
+                // Schedule it and mark as running
+                autoCmd.schedule();
+                autoRunning = true;
+            }
+            else if (faceState == 0) {
+                System.out.println("Button F pressed, but no valid direction selected");
+            }
+        })
+    );
+    buttonG.onTrue(
+        new InstantCommand(() -> {
+            if (faceState == 1 && !autoRunning) {
+                currentDestination = "bGposFace"; // must match your PathPlanner file name
+        
+                // Build the auto command dynamically
+                Command autoCmd = Pathfinding.goTo(currentDestination)
+                    .andThen(() -> autoRunning = false); // mark complete when done
+        
+                // Schedule it and mark as running
+                autoCmd.schedule();
+                autoRunning = true;
+            }
+            else if (faceState == -1 && !autoRunning) {
+                currentDestination = "bGposTrough"; // must match your PathPlanner file name
+        
+                // Build the auto command dynamically
+                Command autoCmd = Pathfinding.goTo(currentDestination)
+                    .andThen(() -> autoRunning = false); // mark complete when done
+        
+                // Schedule it and mark as running
+                autoCmd.schedule();
+                autoRunning = true;
+            }
+            else if (faceState == 0) {
+                System.out.println("Button G pressed, but no valid direction selected");
+            }
+        })
+    );
+    buttonH.onTrue(
+        new InstantCommand(() -> {
+            if (faceState == 1 && !autoRunning) {
+                currentDestination = "bHposFace"; // must match your PathPlanner file name
+        
+                // Build the auto command dynamically
+                Command autoCmd = Pathfinding.goTo(currentDestination)
+                    .andThen(() -> autoRunning = false); // mark complete when done
+        
+                // Schedule it and mark as running
+                autoCmd.schedule();
+                autoRunning = true;
+            }
+            else if (faceState == -1 && !autoRunning) {
+                currentDestination = "bHposTrough"; // must match your PathPlanner file name
+        
+                // Build the auto command dynamically
+                Command autoCmd = Pathfinding.goTo(currentDestination)
+                    .andThen(() -> autoRunning = false); // mark complete when done
+        
+                // Schedule it and mark as running
+                autoCmd.schedule();
+                autoRunning = true;
+            }
+            else if (faceState == 0) {
+                System.out.println("Button H pressed, but no valid direction selected");
+            }
+        })
+    );
+    buttonI.onTrue(
+        new InstantCommand(() -> {
+            if (faceState == 1 && !autoRunning) {
+                currentDestination = "bIposFace"; // must match your PathPlanner file name
+        
+                // Build the auto command dynamically
+                Command autoCmd = Pathfinding.goTo(currentDestination)
+                    .andThen(() -> autoRunning = false); // mark complete when done
+        
+                // Schedule it and mark as running
+                autoCmd.schedule();
+                autoRunning = true;
+            }
+            else if (faceState == -1 && !autoRunning) {
+                currentDestination = "bIposTrough"; // must match your PathPlanner file name
+        
+                // Build the auto command dynamically
+                Command autoCmd = Pathfinding.goTo(currentDestination)
+                    .andThen(() -> autoRunning = false); // mark complete when done
+        
+                // Schedule it and mark as running
+                autoCmd.schedule();
+                autoRunning = true;
+            }
+            else if (faceState == 0) {
+                System.out.println("Button I pressed, but no valid direction selected");
+            }
+        })
+    );
+    buttonJ.onTrue(
+        new InstantCommand(() -> {
+            if (faceState == 1 && !autoRunning) {
+                currentDestination = "bJposFace"; // must match your PathPlanner file name
+        
+                // Build the auto command dynamically
+                Command autoCmd = Pathfinding.goTo(currentDestination)
+                    .andThen(() -> autoRunning = false); // mark complete when done
+        
+                // Schedule it and mark as running
+                autoCmd.schedule();
+                autoRunning = true;
+            }
+            else if (faceState == -1 && !autoRunning) {
+                currentDestination = "bJposTrough"; // must match your PathPlanner file name
+        
+                // Build the auto command dynamically
+                Command autoCmd = Pathfinding.goTo(currentDestination)
+                    .andThen(() -> autoRunning = false); // mark complete when done
+        
+                // Schedule it and mark as running
+                autoCmd.schedule();
+                autoRunning = true;
+            }
+            else if (faceState == 0) {
+                System.out.println("Button J pressed, but no valid direction selected");
+            }
+        })
+    );
+    buttonK.onTrue(
+        new InstantCommand(() -> {
+            if (faceState == 1 && !autoRunning) {
+                currentDestination = "bKposFace"; // must match your PathPlanner file name
+        
+                // Build the auto command dynamically
+                Command autoCmd = Pathfinding.goTo(currentDestination)
+                    .andThen(() -> autoRunning = false); // mark complete when done
+        
+                // Schedule it and mark as running
+                autoCmd.schedule();
+                autoRunning = true;
+            }
+            else if (faceState == -1 && !autoRunning) {
+                currentDestination = "bKposTrough"; // must match your PathPlanner file name
+        
+                // Build the auto command dynamically
+                Command autoCmd = Pathfinding.goTo(currentDestination)
+                    .andThen(() -> autoRunning = false); // mark complete when done
+        
+                // Schedule it and mark as running
+                autoCmd.schedule();
+                autoRunning = true;
+            }
+            else if (faceState == 0) {
+                System.out.println("Button K pressed, but no valid direction selected");
+            }
+        })
+    );
+    buttonL.onTrue(
+        new InstantCommand(() -> {
+            if (faceState == 1 && !autoRunning) {
+                currentDestination = "bLposFace"; // must match your PathPlanner file name
+        
+                // Build the auto command dynamically
+                Command autoCmd = Pathfinding.goTo(currentDestination)
+                    .andThen(() -> autoRunning = false); // mark complete when done
+        
+                // Schedule it and mark as running
+                autoCmd.schedule();
+                autoRunning = true;
+            }
+            else if (faceState == -1 && !autoRunning) {
+                currentDestination = "bLposTrough"; // must match your PathPlanner file name
+        
+                // Build the auto command dynamically
+                Command autoCmd = Pathfinding.goTo(currentDestination)
+                    .andThen(() -> autoRunning = false); // mark complete when done
+        
+                // Schedule it and mark as running
+                autoCmd.schedule();
+                autoRunning = true;
+            }
+            else if (faceState == 0) {
+                System.out.println("Button L pressed, but no valid direction selected");
+            }
+        })
+    );
+
+    // We don't need this anymore, if vision and pathplanner work.
+    // // Bind buttons 5, 6, 7, and 8 to reset the gyro
+    //     new JoystickButton(m_driverController, 5)
+    //         .onTrue(new InstantCommand(m_robotDrive::resetGyro, m_robotDrive));
+    //     new JoystickButton(m_driverController, 6)
+    //         .onTrue(new InstantCommand(m_robotDrive::resetGyro, m_robotDrive));
+    //     new JoystickButton(m_driverController, 7)
+    //         .onTrue(new InstantCommand(m_robotDrive::resetGyro, m_robotDrive));
+    //     new JoystickButton(m_driverController, 8)
+    //         .onTrue(new InstantCommand(m_robotDrive::resetGyro, m_robotDrive));
 
 
 
