@@ -149,17 +149,13 @@ public class RobotContainer {
     faceValueTrigger
         .onTrue(
             new InstantCommand(() -> {
-                faceState = 1;
+                faceState = -1;
             })
         );
     faceValueTrigger
         .onFalse(
             new InstantCommand(() -> {
-                if (troughValueTrigger.getAsBoolean()) {
-                    faceState = 3;
-                } else {
-                    faceState = 0;
-                }
+                faceState = 0;
             })
         );
 
@@ -167,7 +163,7 @@ public class RobotContainer {
     troughValueTrigger 
         .onTrue(
             new InstantCommand(() -> {
-                faceState = -1;
+                faceState = 1;
             })
         );
     troughValueTrigger
