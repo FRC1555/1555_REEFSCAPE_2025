@@ -254,6 +254,7 @@ public class RobotContainer {
                 // Schedule it and mark as running
                 autoCmd.schedule();
                 autoRunning = true;
+                System.out.println(faceState + " & " + currentDestination);
             }
             else if (faceState == -1 && !autoRunning) {
                 currentDestination = "bAposTrough"; // must match your PathPlanner file name
@@ -265,6 +266,7 @@ public class RobotContainer {
                 // Schedule it and mark as running
                 autoCmd.schedule();
                 autoRunning = true;
+                System.out.println(faceState + " & " + currentDestination);
             }
             else if (faceState == 0) {
                 System.out.println("Button A pressed, but no valid direction selected");
