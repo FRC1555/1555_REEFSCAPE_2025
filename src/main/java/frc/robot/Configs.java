@@ -66,7 +66,7 @@ public final class Configs {
           .outputRange(-1, 1)
           .maxMotion
           .maxVelocity(2000)
-          .maxAcceleration(10000);
+          .maxAcceleration(2000);
     }
   }
   public static final class CoralSubsystem {

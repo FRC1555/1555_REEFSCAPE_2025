@@ -39,6 +39,8 @@ import frc.robot.subsystems.AlgaeSubsystem;
 import frc.robot.subsystems.CoralSubsystem;
 import frc.robot.subsystems.CoralSubsystem.Setpoint;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ClimbSubsystem;
+import frc.robot.subsystems.ClimbSubsystem.CSetpoint;
 import java.util.List;
 
 
@@ -54,6 +56,7 @@ public class RobotContainer {
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final CoralSubsystem m_coralSubSystem = new CoralSubsystem();
   private final AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
+  private final ClimbSubsystem m_climbSubsystem = new ClimbSubsystem();
 
   // The driver's controller
   public Joystick m_driverController =
@@ -147,6 +150,10 @@ public class RobotContainer {
         .leftTrigger(OIConstants.kTriggerButtonThreshold)
         .whileTrue(m_algaeSubsystem.reverseIntakeCommand());
 
+    // Binding D-Pad to setpoints for the Climber, the interlock is not implemented, PROCEED WITH CAUTION
+    m_manipController.povRight().onTrue(m_climbSubsystem.setSetpointCommand(CSetpoint.kNeutral));
+    m_manipController.povUp().onTrue(m_climbSubsystem.setSetpointCommand(CSetpoint.kForward));
+    m_manipController.povDown().onTrue(m_climbSubsystem.setSetpointCommand(CSetpoint.kBackward));
     // Turtle Beach Button 1 or Colored A -> Set Robot Speed to Full Send (Child Detected)
     fullSendButton.onTrue(new InstantCommand(() -> m_robotDrive.setDriveSpeed(1)));
     highSpeedButton.onTrue(new InstantCommand(() -> m_robotDrive.setDriveSpeed(0.75)));
