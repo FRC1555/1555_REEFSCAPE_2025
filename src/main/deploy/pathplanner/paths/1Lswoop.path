@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.139942622950819,
-        "y": 7.267514344262295
+        "x": 5.070799180323588,
+        "y": 7.291649590167451
       },
       "isLocked": false,
       "linkedName": "Cage 1"
@@ -20,8 +20,8 @@
         "y": 5.469518442622951
       },
       "prevControl": {
-        "x": 4.902971311475409,
-        "y": 5.445543032786885
+        "x": 4.507377049176048,
+        "y": 6.716239754101878
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 91.84761026599462
+    "rotation": 90.00000000053824
   },
   "reversed": false,
   "folder": "old",
