@@ -159,17 +159,13 @@ public class RobotContainer {
     faceValueTrigger
         .onTrue(
             new InstantCommand(() -> {
-                faceState = 1;
+                faceState = -1;
             })
         );
     faceValueTrigger
         .onFalse(
             new InstantCommand(() -> {
-                if (troughValueTrigger.getAsBoolean()) {
-                    faceState = 3;
-                } else {
-                    faceState = 0;
-                }
+                faceState = 0;
             })
         );
 
@@ -177,7 +173,7 @@ public class RobotContainer {
     troughValueTrigger 
         .onTrue(
             new InstantCommand(() -> {
-                faceState = -1;
+                faceState = 1;
             })
         );
     troughValueTrigger
@@ -268,6 +264,7 @@ public class RobotContainer {
                 // Schedule it and mark as running
                 autoCmd.schedule();
                 autoRunning = true;
+                System.out.println(faceState + " & " + currentDestination);
             }
             else if (faceState == -1 && !autoRunning) {
                 currentDestination = "bAposTrough"; // must match your PathPlanner file name
@@ -279,6 +276,7 @@ public class RobotContainer {
                 // Schedule it and mark as running
                 autoCmd.schedule();
                 autoRunning = true;
+                System.out.println(faceState + " & " + currentDestination);
             }
             else if (faceState == 0) {
                 System.out.println("Button A pressed, but no valid direction selected");
