@@ -3,9 +3,10 @@
   "robotLength": 0.914,
   "holonomicMode": true,
   "pathFolders": [
+    "D",
     "E",
     "F",
-    "D",
+    "Learning PathPlanner Cole",
     "old"
   ],
   "autoFolders": [

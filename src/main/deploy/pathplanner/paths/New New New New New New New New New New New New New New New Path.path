@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.995378989360602,
+        "y": 7.012234042552823
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.458610372336692,
+        "y": 1.4228390957421881
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.227659574468086,
+        "y": 2.6364029255319146
+      },
+      "prevControl": {
+        "x": 6.394547872336692,
+        "y": 0.6176861702102734
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 118.072486935853
+  },
+  "reversed": false,
+  "folder": "Learning PathPlanner Cole",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 179.94703779162083
+  },
+  "useDefaultConstraints": true
+}
