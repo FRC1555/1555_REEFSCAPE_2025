@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import frc.robot.Constants.AlgaeSubsystemConstants;
 import frc.robot.Constants.ClimbSubsystemConstants;
 import frc.robot.Constants.ClimbSubsystemConstants.ClimbSetpoints;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -51,14 +52,12 @@ public class ClimbSubsystem extends SubsystemBase {
                         climbCurrentTarget = ClimbSetpoints.kNeutral;
                         break;
                     case kForward:
-                        climbCurrentTarget = ClimbSetpoints.kForward;  
+                        climbCurrentTarget = ClimbSetpoints.kForward;
                         break;
                     case kBackward:
                         climbCurrentTarget = ClimbSetpoints.kBackward;
                         break;
                 }
-                // Move the motor to the target position
-                moveToSetpoint();
             }
         );
     }

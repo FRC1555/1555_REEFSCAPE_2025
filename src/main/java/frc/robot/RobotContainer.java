@@ -151,7 +151,7 @@ public class RobotContainer {
         .whileTrue(m_algaeSubsystem.reverseIntakeCommand());
 
     // Binding D-Pad to setpoints for the Climber, the interlock is not implemented, PROCEED WITH CAUTION
-    m_manipController.povRight().onTrue(m_climbSubsystem.setSetpointCommand(CSetpoint.kNeutral));
+    m_manipController.povRight().onTrue(m_climbSubsystem.setSetpointCommand(CSetpoint.kNeutral)); 
     m_manipController.povUp().onTrue(m_climbSubsystem.setSetpointCommand(CSetpoint.kForward));
     m_manipController.povDown().onTrue(m_climbSubsystem.setSetpointCommand(CSetpoint.kBackward));
     // Turtle Beach Button 1 or Colored A -> Set Robot Speed to Full Send (Child Detected)

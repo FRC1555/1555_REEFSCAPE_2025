@@ -183,9 +183,12 @@ public class AlgaeSubsystem extends SubsystemBase {
   private void setIntakePower(double power) {
     intakeMotor.set(power);
   }
-
+  /** This method is used by the Climb Subsystem to push the algae arm out of the way */
+  public void pushIntakeOut() {
+    setIntakePosition(AlgaeSubsystemConstants.ArmSetpoints.kDown);
+  }
   /** Set the arm motor position. This will use closed loop position control. */
-  private void setIntakePosition(double position) {
+  public void setIntakePosition(double position) {
     armController.setReference(position, ControlType.kPosition);
   }
 
