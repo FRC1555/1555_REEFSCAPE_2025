@@ -38,7 +38,7 @@ public class ClimbSubsystem extends SubsystemBase {
             PersistMode.kPersistParameters);
         
     }
-
+ 
     private void moveToSetpoint() {
         climbController
             .setReference(climbCurrentTarget, ControlType.kMAXMotionPositionControl);
@@ -58,6 +58,7 @@ public class ClimbSubsystem extends SubsystemBase {
                         climbCurrentTarget = ClimbSetpoints.kBackward;
                         break;
                 }
+                moveToSetpoint();
             }
         );
     }

@@ -108,16 +108,16 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {}
 
-  /**
-   * This function is called periodically during simulation
-   *
-   * <p>This collects each subsystem's physics model's current draw to update the battery simulation
-   */
-  @Override
-  public void simulationPeriodic() {
-    // SimBattery estimates loaded battery voltages
-    RoboRioSim.setVInVoltage(
-        BatterySim.calculateDefaultBatteryLoadedVoltage(
-            m_robotContainer.getSimulationTotalCurrentDraw()));
-  }
+  // /**
+  //  * This function is called periodically during simulation
+  //  *
+  //  * <p>This collects each subsystem's physics model's current draw to update the battery simulation
+  //  */
+  // @Override
+  // public void simulationPeriodic() {
+  //   // SimBattery estimates loaded battery voltages
+  //   RoboRioSim.setVInVoltage(
+  //       BatterySim.calculateDefaultBatteryLoadedVoltage(
+  //           m_robotContainer.getSimulationTotalCurrentDraw()));
+  // }
 }

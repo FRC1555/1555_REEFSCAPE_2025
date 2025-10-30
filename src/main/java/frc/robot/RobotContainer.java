@@ -32,6 +32,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
@@ -41,6 +42,8 @@ import frc.robot.subsystems.CoralSubsystem.Setpoint;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ClimbSubsystem.CSetpoint;
+import frc.robot.commands.Climbcommand; // Ensure Climbcommand is imported
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import java.util.List;
 
 
@@ -70,8 +73,15 @@ public class RobotContainer {
   public JoystickButton midSpeedButton = new JoystickButton(m_driverController, 3);
   public JoystickButton lowSpeedButton = new JoystickButton(m_driverController, 4);
 
+  // Climbcommand instance
+  private final Climbcommand m_climbCommand;
+
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    // Initialize Climbcommand with subsystems
+    m_climbCommand = new Climbcommand(m_climbSubsystem, m_algaeSubsystem);
+
     //registering named Commands for Algae
     NamedCommands.registerCommand("Grab Algae", m_algaeSubsystem.runIntakeCommand());
     NamedCommands.registerCommand("Spit Out Algae", m_algaeSubsystem.reverseIntakeCommand());
@@ -80,7 +90,6 @@ public class RobotContainer {
     NamedCommands.registerCommand("Spit Out Coral", m_coralSubSystem.reverseIntakeCommand());
     NamedCommands.registerCommand("Coral Station", m_coralSubSystem.setSetpointCommand(Setpoint.kFeederStation));
     NamedCommands.registerCommand("L2", m_coralSubSystem.setSetpointCommand(Setpoint.kLevel2));
-    NamedCommands.registerCommand("L3", m_coralSubSystem.setSetpointCommand(Setpoint.kLevel3));
     NamedCommands.registerCommand("L4", m_coralSubSystem.setSetpointCommand(Setpoint.kLevel4));
     //building the auto chooser on smartdashboard
     autoChooser = AutoBuilder.buildAutoChooser();
@@ -104,6 +113,27 @@ public class RobotContainer {
 
     // Set the ball intake to in/out when not running based on internal state
     m_algaeSubsystem.setDefaultCommand(m_algaeSubsystem.idleCommand());
+
+    // Bind POV to Climbcommand
+    bindPOVToClimbCommand();
+  }
+
+  private void bindPOVToClimbCommand() {
+    // Bind POV Up to start the Climbcommand with POV 0
+    new POVButton(m_manipController.getHID(), 0) // POV Up
+        .onTrue(new RunCommand(() -> m_climbCommand.execute(0), m_climbSubsystem));
+
+    // Bind POV Right to start the Climbcommand with POV 90
+    new POVButton(m_manipController.getHID(), 90) // POV Right
+        .onTrue(new RunCommand(() -> m_climbCommand.execute(90), m_climbSubsystem));
+
+    // Bind POV Down to start the Climbcommand with POV 180
+    new POVButton(m_manipController.getHID(), 180) // POV Down
+        .onTrue(new RunCommand(() -> m_climbCommand.execute(180), m_climbSubsystem));
+
+    // Bind POV Left to start the Climbcommand with POV 270
+    new POVButton(m_manipController.getHID(), 270) // POV Left
+        .onTrue(new RunCommand(() -> m_climbCommand.execute(270), m_climbSubsystem));
   }
 
   /**
@@ -113,17 +143,13 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-
-
-
     // Left Bumper -> Run tube intake
     m_manipController.rightBumper().whileTrue(m_coralSubSystem.runIntakeCommand());
 
     // Right Bumper -> Run tube intake in reverse
     m_manipController.leftBumper().whileTrue(m_coralSubSystem.reverseIntakeCommand());
 
-    // B Button -> Elevator/Arm to human player position, set ball intake to stow
-    // when idle
+    // B Button -> Elevator/Arm to human player position, set ball intake to stow when idle
     m_manipController
         .b()
         .onTrue(
@@ -145,33 +171,28 @@ public class RobotContainer {
         .rightTrigger(OIConstants.kTriggerButtonThreshold)
         .whileTrue(m_algaeSubsystem.runIntakeCommand());
 
-    // Left Trigger -> Run ball intake in reverse, set to stow when idle
-    m_manipController
-        .leftTrigger(OIConstants.kTriggerButtonThreshold)
-        .whileTrue(m_algaeSubsystem.reverseIntakeCommand());
+    // Bind POV buttons to Climbcommand
+    new POVButton(m_manipController.getHID(), 0) // POV Up
+        .whileTrue(new RunCommand(() -> m_climbCommand.execute(0)));
 
-    // Binding D-Pad to setpoints for the Climber, the interlock is not implemented, PROCEED WITH CAUTION
-    m_manipController.povRight().onTrue(m_climbSubsystem.setSetpointCommand(CSetpoint.kNeutral)); 
-    m_manipController.povUp().onTrue(m_climbSubsystem.setSetpointCommand(CSetpoint.kForward));
-    m_manipController.povDown().onTrue(m_climbSubsystem.setSetpointCommand(CSetpoint.kBackward));
-    // Turtle Beach Button 1 or Colored A -> Set Robot Speed to Full Send (Child Detected)
-    fullSendButton.onTrue(new InstantCommand(() -> m_robotDrive.setDriveSpeed(1)));
-    highSpeedButton.onTrue(new InstantCommand(() -> m_robotDrive.setDriveSpeed(0.75)));
-    midSpeedButton.onTrue(new InstantCommand(() -> m_robotDrive.setDriveSpeed(0.5)));
-    lowSpeedButton.onTrue(new InstantCommand(() -> m_robotDrive.setDriveSpeed(0.25)));
+    new POVButton(m_manipController.getHID(), 90) // POV Right
+        .whileTrue(new RunCommand(() -> m_climbCommand.execute(90)));
 
-        // Bind buttons 5, 6, 7, and 8 to reset the gyro
-        new JoystickButton(m_driverController, 5)
-            .onTrue(new InstantCommand(m_robotDrive::resetGyro, m_robotDrive));
-        new JoystickButton(m_driverController, 6)
-            .onTrue(new InstantCommand(m_robotDrive::resetGyro, m_robotDrive));
-        new JoystickButton(m_driverController, 7)
-            .onTrue(new InstantCommand(m_robotDrive::resetGyro, m_robotDrive));
-        new JoystickButton(m_driverController, 8)
-            .onTrue(new InstantCommand(m_robotDrive::resetGyro, m_robotDrive));
+    new POVButton(m_manipController.getHID(), 180) // POV Down
+        .whileTrue(new RunCommand(() -> m_climbCommand.execute(180)));
 
+    new POVButton(m_manipController.getHID(), 270) // POV Left
+        .whileTrue(new RunCommand(() -> m_climbCommand.execute(270)));
 
-
+    // Bind buttons 5, 6, 7, and 8 to reset the gyro
+    new JoystickButton(m_driverController, 5)
+        .onTrue(new InstantCommand(m_robotDrive::resetGyro, m_robotDrive));
+    new JoystickButton(m_driverController, 6)
+        .onTrue(new InstantCommand(m_robotDrive::resetGyro, m_robotDrive));
+    new JoystickButton(m_driverController, 7)
+        .onTrue(new InstantCommand(m_robotDrive::resetGyro, m_robotDrive));
+    new JoystickButton(m_driverController, 8)
+        .onTrue(new InstantCommand(m_robotDrive::resetGyro, m_robotDrive));
   }
 
   public double getSimulationTotalCurrentDraw() {
