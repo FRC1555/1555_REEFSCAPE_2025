@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import org.json.simple.parser.ParseException;
 
@@ -14,7 +15,7 @@ import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
 import edu.wpi.first.wpilibj.Joystick;
-
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -66,6 +67,9 @@ public class DriveSubsystem extends SubsystemBase {
   private double ySpeedDelivered;
   private double rotDelivered; 
 
+  // Vision subsystem
+  private final VisionSubsystem m_visionSubsystem;
+
   //Speed Control variables
   public double currentDriveSpeed = 0.5;
 
@@ -82,8 +86,13 @@ public class DriveSubsystem extends SubsystemBase {
           m_rearRight.getPosition()
       }, new Pose2d());
 
+  
+    public void updateOdometryWithVision(Pose2d visionPose, double timestamp) {
+       m_odometry.addVisionMeasurement(visionPose, timestamp);
+    }
   // Creates a new DriveSubsystem. 
-  public DriveSubsystem() {
+  public DriveSubsystem(VisionSubsystem m_visionSubsystem) {
+    this.m_visionSubsystem = m_visionSubsystem;
     m_odometry.setVisionMeasurementStdDevs(VecBuilder.fill(.5, .5, 9999999));
     RobotConfig config = null;
     try{
@@ -151,6 +160,11 @@ public class DriveSubsystem extends SubsystemBase {
             m_rearLeft.getPosition(),
             m_rearRight.getPosition()
         });
+        // Inject vision data into odometry
+    Optional<Pose2d> visionPose = m_visionSubsystem.getEstimatedPose();
+    visionPose.ifPresent(pose -> {
+        m_odometry.addVisionMeasurement(pose, Timer.getFPGATimestamp());
+    });
   }
 
   /**

@@ -39,6 +39,7 @@ import frc.robot.subsystems.AlgaeSubsystem;
 import frc.robot.subsystems.CoralSubsystem;
 import frc.robot.subsystems.CoralSubsystem.Setpoint;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
 import java.util.List;
 
 
@@ -51,9 +52,10 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class RobotContainer {
   // The robot's subsystems
-  private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final CoralSubsystem m_coralSubSystem = new CoralSubsystem();
   private final AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
+  private final VisionSubsystem m_visionSubsystem = new VisionSubsystem("flAPtag");
+  private final DriveSubsystem m_robotDrive = new DriveSubsystem(m_visionSubsystem);
 
   // The driver's controller
   public Joystick m_driverController =
