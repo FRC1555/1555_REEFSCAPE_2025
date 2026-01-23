@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import org.json.simple.parser.ParseException;
 
@@ -14,7 +15,7 @@ import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
 import edu.wpi.first.wpilibj.Joystick;
-
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -33,7 +34,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants;
-import frc.robot.LimelightHelpers;
 import frc.robot.Robot;
 
 @SuppressWarnings("unused")
@@ -67,6 +67,9 @@ public class DriveSubsystem extends SubsystemBase {
   private double ySpeedDelivered;
   private double rotDelivered; 
 
+  // Vision subsystem
+  private final VisionSubsystem m_visionSubsystem;
+
   //Speed Control variables
   public double currentDriveSpeed = 0.5;
 
@@ -83,8 +86,13 @@ public class DriveSubsystem extends SubsystemBase {
           m_rearRight.getPosition()
       }, new Pose2d());
 
+  
+    public void updateOdometryWithVision(Pose2d visionPose, double timestamp) {
+       m_odometry.addVisionMeasurement(visionPose, timestamp);
+    }
   // Creates a new DriveSubsystem. 
-  public DriveSubsystem() {
+  public DriveSubsystem(VisionSubsystem m_visionSubsystem) {
+    this.m_visionSubsystem = m_visionSubsystem;
     m_odometry.setVisionMeasurementStdDevs(VecBuilder.fill(.5, .5, 9999999));
     RobotConfig config = null;
     try{
@@ -144,17 +152,6 @@ public class DriveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // Update the odometry in the periodic block
-    // LimelightHelpers.SetRobotOrientation("limelight", m_gyro.getAngle(), 0.0, 0.0, 0.0, 0.0, 0.0);
-
-    // Get the pose estimate
-    // LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
-    // if(!Robot.isSimulation()){
-    // // Add it to your pose estimator
-    // m_odometry.addVisionMeasurement(
-    //     limelightMeasurement.pose,
-    //     limelightMeasurement.timestampSeconds);
-    // }
     m_odometry.update(
         Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ)),
         new SwerveModulePosition[] {
@@ -163,6 +160,11 @@ public class DriveSubsystem extends SubsystemBase {
             m_rearLeft.getPosition(),
             m_rearRight.getPosition()
         });
+        // Inject vision data into odometry
+    Optional<Pose2d> visionPose = m_visionSubsystem.getEstimatedPose();
+    visionPose.ifPresent(pose -> {
+        m_odometry.addVisionMeasurement(pose, Timer.getFPGATimestamp());
+    });
   }
 
   /**
